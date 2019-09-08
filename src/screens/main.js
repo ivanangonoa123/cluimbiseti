@@ -1,7 +1,10 @@
 import { Animated, Easing, StyleSheet, Text, View } from 'react-native';
 import * as Font from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faPlusSquare, faCookieBite } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
+import * as Progress from 'react-native-progress';
 
 class MainScreen extends React.Component {
     static navigationOptions = {
@@ -64,49 +67,73 @@ class MainScreen extends React.Component {
           <LinearGradient
             colors={['#b9e0f7', '#68b3f9']}
             style={styles.gradient}>
-            {
-              this.state.fontLoaded ? [
-              <Text key="cta"
-                style={[styles.cta]}>
-                  Main
-              </Text>
-              ] :
-              null
-            }
           </LinearGradient>
+          <View style={styles.topMenu}>
+            <View style={styles.barWrapper}>
+              <FontAwesomeIcon
+                icon={faCookieBite}
+                style={styles.icon}
+                size={32}
+                color={'#e88a43'}/>
+              <Progress.Bar
+                style={styles.bar}
+                borderWidth={2}
+                borderColor={rgb(83, 137, 24)}
+                progress={0.3}
+                color={'#74c122'}
+                width={200}
+                height={20}/>
+            </View>
+            <View style={styles.barWrapper}>
+              <FontAwesomeIcon
+                icon={faPlusSquare}
+                style={styles.icon}
+                size={32}
+                color={'#d11b1b'}/>
+              <Progress.Bar
+                style={styles.bar}
+                borderWidth={2}
+                borderColor={rgb(147, 19, 19)}
+                progress={0.8}
+                color={'#d11b1b'}
+                width={200}
+                height={20}/>
+            </View>
+          </View>
         </View>
       )
     }
   }
   
   const styles = StyleSheet.create({
-    gradient: {
-      width: '100%',
-      height: '100%',
-      alignItems: 'center',
-      justifyContent: 'center',
+    container: {
       flex: 1,
     },
-    container: {
-      flex: 1
+    gradient: {
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
+      flex: 1,
     },
-    title: {
-      fontFamily: 'Press Start 2P',
-      fontSize: 30,
-      textShadowColor: "#000",
-      flexWrap: "nowrap",
-      textShadowOffset: {
-        width: 2,
-        height: 2,
-      },
-      textShadowRadius:10,
-      elevation: 5,
-      color: 'white'
+    topMenu: {
+      paddingTop: 30,
+      alignItems: 'center',
     },
     cta: {
       fontFamily: 'Press Start 2P',
       fontSize: 15,
       color: 'white'
+    },
+    barWrapper: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 10
+    },
+    bar: {
+      
+    },
+    icon: {
+      marginRight: 10
     }
   });
   export default MainScreen;
