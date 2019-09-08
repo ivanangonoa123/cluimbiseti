@@ -3,6 +3,7 @@ import * as Font from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { APP_CONSTANTS } from '../constants';
 
 class HomeScreen extends React.Component {
     static navigationOptions = {
@@ -20,6 +21,7 @@ class HomeScreen extends React.Component {
     }
     
     async componentDidMount() {
+      // import at app level
       await Font.loadAsync({
         'Press Start 2P': require('../../assets/fonts/PressStart2P-Regular.ttf'),
       });
@@ -64,7 +66,7 @@ class HomeScreen extends React.Component {
       return (
         <View style={styles.container}>
           <LinearGradient
-              colors={['#7ad4d6', '#296b6d']}
+              colors={[APP_CONSTANTS.mainBgColor, APP_CONSTANTS.mainBgColorDark]}
               style={styles.gradient}>
           <TouchableWithoutFeedback
             onPress={() => navigate('Main')}

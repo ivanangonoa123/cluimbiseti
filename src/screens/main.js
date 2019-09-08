@@ -1,18 +1,22 @@
-import { Animated, Easing, StyleSheet, Text, View } from 'react-native';
+import { Modal, Animated, Button, Easing, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import * as Font from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faPlusSquare, faCookieBite, faCloud } from '@fortawesome/free-solid-svg-icons';
+import { faPlusSquare, faCookieBite, faCloud, faTimes } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import * as Progress from 'react-native-progress';
+import { APP_CONSTANTS } from '../constants';
 
 class MainScreen extends React.Component {
     static navigationOptions = {
         header: null,
     };
 
+    modalText = 'HEY! Es hora de criar tu Cluimbiseti™'
+
     state = {
       fontLoaded: false,
+      modalVisible: false
     };
   
     constructor() {
@@ -22,6 +26,9 @@ class MainScreen extends React.Component {
     }
     
     async componentDidMount() {
+      setTimeout(() => {
+        this.setModalVisible(true);
+      }, 1000)
       await Font.loadAsync({
         'Press Start 2P': require('../../assets/fonts/PressStart2P-Regular.ttf'),
       });
@@ -51,6 +58,10 @@ class MainScreen extends React.Component {
         )
       ]).start(() => this.animateTitle())
     }
+
+    setModalVisible(visible) {
+      this.setState({modalVisible: visible})
+    }
   
     render() {
       // 一_一 back and fort osc, any better way to do this?
@@ -64,6 +75,30 @@ class MainScreen extends React.Component {
       })
       return (
         <View style={styles.container}>
+          <Modal
+            animationType='fade'
+            transparent={true}
+            visible={this.state.modalVisible}>
+              <View style={styles.modalOuter}>
+                <View style={styles.modalInner}>
+                  <Text style={styles.modalText}>
+                    {this.modalText}
+                  </Text>
+                  <View style={styles.modalClose}>
+                    <TouchableOpacity
+                      underlayColor={APP_CONSTANTS.mainBgColorDark}
+                      onPress={() => {
+                        this.setModalVisible(!this.state.modalVisible)
+                      }}>
+                      <FontAwesomeIcon
+                        icon={faTimes}
+                        size={50}
+                        color={APP_CONSTANTS.mainBgColorDark}/>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+          </Modal>
           <LinearGradient
             colors={['#b9e0f7', '#68b3f9']}
             style={styles.gradient}>
@@ -171,6 +206,45 @@ class MainScreen extends React.Component {
         { scaleX: 3,}
       ],
       backgroundColor: '#49842f',
+    },
+    modalOuter: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: 'rgba(0, 0, 0, 0.25)'
+    },
+    modalInner: {
+      backgroundColor: APP_CONSTANTS.mainBgColor,
+      alignItems: 'center',
+      justifyContent: 'center',
+      margin: 20,
+      padding: 20,
+      minHeight: 300,
+      maxWidth: 400,
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 10,
+        height: 10,
+      },
+      shadowOpacity: 0.50,
+      shadowRadius: 10,
+      elevation: 5,
+    },
+    modalText: {
+      textAlign: 'center',
+      fontSize: 30,
+      textShadowColor: APP_CONSTANTS.mainBgColorDark,
+      textShadowOffset: {
+        width: 1,
+        height: 1,
+      },
+      textShadowRadius: 2,
+      color: 'white'
+    },
+    modalClose: {
+      position: 'absolute',
+      top: 0,
+      right: 0
     }
   });
   export default MainScreen;
