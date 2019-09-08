@@ -2,7 +2,7 @@ import { Animated, Easing, StyleSheet, Text, View } from 'react-native';
 import * as Font from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faPlusSquare, faCookieBite } from '@fortawesome/free-solid-svg-icons';
+import { faPlusSquare, faCookieBite, faCloud } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import * as Progress from 'react-native-progress';
 
@@ -68,6 +68,26 @@ class MainScreen extends React.Component {
             colors={['#b9e0f7', '#68b3f9']}
             style={styles.gradient}>
           </LinearGradient>
+          {/* extract clouds, randomize and animate */}
+          <View 
+            style={[styles.cloud, {
+              right: 20,
+              top: 110}
+            ]}>
+            <FontAwesomeIcon
+              icon={faCloud}
+              size={100}
+              color={'#d9f5fc'}/>
+          </View>
+          <View style={[styles.cloud, {
+              left: 20,
+              top: 90
+          }]}>
+          <FontAwesomeIcon
+            icon={faCloud}
+            size={100}
+            color={'#d9f5fc'}/>
+          </View>
           <View style={styles.topMenu}>
             <View style={styles.barWrapper}>
               <FontAwesomeIcon
@@ -100,6 +120,10 @@ class MainScreen extends React.Component {
                 height={20}/>
             </View>
           </View>
+            <LinearGradient
+              colors={['#49842f', '#243f18']}
+              style={styles.floor}>
+            </LinearGradient>
         </View>
       )
     }
@@ -115,25 +139,38 @@ class MainScreen extends React.Component {
       height: '100%',
       flex: 1,
     },
+    cloud: {
+      position: 'absolute',
+      right: 0,
+      top: 120
+    },
     topMenu: {
+      position: 'absolute',
+      width: '100%',
+      left: 0,
+      top: 0,
       paddingTop: 30,
       alignItems: 'center',
-    },
-    cta: {
-      fontFamily: 'Press Start 2P',
-      fontSize: 15,
-      color: 'white'
     },
     barWrapper: {
       flexDirection: 'row',
       alignItems: 'center',
       marginBottom: 10
     },
-    bar: {
-      
-    },
     icon: {
       marginRight: 10
+    },
+    floor: {
+      // 一_一 some un-hardcoded way of doing it here for landscape responsiveness
+      position: 'absolute',
+      width: 300,
+      height: 250,
+      borderRadius: 200,
+      bottom: -180,
+      transform: [
+        { scaleX: 3,}
+      ],
+      backgroundColor: '#49842f',
     }
   });
   export default MainScreen;
