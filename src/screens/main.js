@@ -1,4 +1,4 @@
-import { Modal, Animated, Button, Easing, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Modal, Animated, Alert, StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import * as Font from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -6,13 +6,16 @@ import { faPlusSquare, faCookieBite, faCloud, faTimes } from '@fortawesome/free-
 import React from 'react';
 import * as Progress from 'react-native-progress';
 import { APP_CONSTANTS } from '../constants';
+import { Audio } from 'expo';
+import EggSvg from '../components/svg/egg';
 
+const source = require('app/assets/sounds/close_pop.mp3');
 class MainScreen extends React.Component {
     static navigationOptions = {
         header: null,
     };
 
-    modalText = 'HEY! Es hora de criar tu Cluimbiseti™'
+    modalText = 'HEY! Es hora de criar tu Cluimbiseti™';
 
     state = {
       fontLoaded: false,
@@ -24,39 +27,32 @@ class MainScreen extends React.Component {
       this.animatedValue = new Animated.Value(0)
       this.springValue = new Animated.Value(0.3)
     }
-    
+
+    // not working on expo, need to check
+    async playSound() {
+      const soundObject = new Audio.Sound();
+      try {
+        Audio.setIsEnabledAsync(true);
+        await soundObject.loadAsync(require('app/assets/sounds/close_pop.mp3'));
+        await soundObject.playAsync();
+      } catch (error) {
+        Alert.alert('error',
+          'error loading sound'
+        )
+      }
+    }
+
     async componentDidMount() {
       setTimeout(() => {
         this.setModalVisible(true);
       }, 1000)
+
       await Font.loadAsync({
-        'Press Start 2P': require('../../assets/fonts/PressStart2P-Regular.ttf'),
+        'Press Start 2P': require('app/assets/fonts/PressStart2P-Regular.ttf'),
       });
   
       this.setState({ fontLoaded: true })
       this.animateTitle()
-    }
-  
-    animateTitle() {
-      this.animatedValue.setValue(0)
-      this.springValue.setValue(0.3)
-      Animated.parallel([
-        // after decay, in parallel:
-        Animated.spring(this.springValue, {
-            toValue: 1,
-            friction: 1
-          }
-        ),
-  
-        Animated.timing(
-          this.animatedValue,
-          {
-            toValue: 1,
-            duration: 2000,
-            easing: Easing.easeOut
-          }
-        )
-      ]).start(() => this.animateTitle())
     }
 
     setModalVisible(visible) {
@@ -64,19 +60,10 @@ class MainScreen extends React.Component {
     }
   
     render() {
-      // 一_一 back and fort osc, any better way to do this?
-      const rotateZ = this.animatedValue.interpolate({
-        inputRange: [0, 0.25, 0.5, 0.75, 1],
-        outputRange: ['0deg', '-5deg', '0deg', '5deg', '0deg']
-      })
-      const springFontSize = this.springValue.interpolate({
-        inputRange: [0, 0.5, 1],
-        outputRange: [30, 25, 30]
-      })
       return (
         <View style={styles.container}>
           <Modal
-            animationType='fade'
+            animationType="fade"
             transparent={true}
             visible={this.state.modalVisible}>
               <View style={styles.modalOuter}>
@@ -88,6 +75,7 @@ class MainScreen extends React.Component {
                     <TouchableOpacity
                       underlayColor={APP_CONSTANTS.mainBgColorDark}
                       onPress={() => {
+                        this.playSound()
                         this.setModalVisible(!this.state.modalVisible)
                       }}>
                       <FontAwesomeIcon
@@ -155,10 +143,11 @@ class MainScreen extends React.Component {
                 height={20}/>
             </View>
           </View>
-            <LinearGradient
-              colors={['#49842f', '#243f18']}
-              style={styles.floor}>
-            </LinearGradient>
+          <LinearGradient
+            colors={['#49842f', '#243f18']}
+            style={styles.floor}>
+          </LinearGradient>
+          <EggSvg style={styles.egg}/>
         </View>
       )
     }
@@ -167,6 +156,7 @@ class MainScreen extends React.Component {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
+      padding: 0
     },
     gradient: {
       position: 'absolute',
@@ -229,6 +219,16 @@ class MainScreen extends React.Component {
       shadowOpacity: 0.50,
       shadowRadius: 10,
       elevation: 5,
+    },
+    egg: {
+      position: 'absolute',
+      alignSelf: 'center',
+      transform: [
+        {
+          scale: 2
+        }
+      ],
+      bottom: 0
     },
     modalText: {
       textAlign: 'center',
