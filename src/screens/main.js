@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPlusSquare, faCookieBite, faTimes } from '@fortawesome/free-solid-svg-icons';
 import * as Progress from 'react-native-progress';
 import { APP_CONSTANTS } from '../Constants';
-import { Audio } from 'expo';
+import { Audio } from 'expo-av';
 import EggSvg from '../components/svg/Egg';
 import Scene from '../components/Scene';
 
@@ -94,7 +94,7 @@ class MainScreen extends React.Component {
               <Progress.Bar
                 style={styles.bar}
                 borderWidth={2}
-                borderColor={rgb(83, 137, 24)}
+                borderColor={'rgb(83, 137, 24)'}
                 progress={0.3}
                 color={'#74c122'}
                 width={200}
@@ -109,7 +109,7 @@ class MainScreen extends React.Component {
               <Progress.Bar
                 style={styles.bar}
                 borderWidth={2}
-                borderColor={rgb(147, 19, 19)}
+                borderColor={'rgb(147, 19, 19)'}
                 progress={0.8}
                 color={'#d11b1b'}
                 width={200}

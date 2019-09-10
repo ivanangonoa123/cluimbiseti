@@ -1,24 +1,43 @@
-import { View, Animated, Easing, Dimensions } from 'react-native';
+import { View, Animated, Text, Easing, Dimensions } from 'react-native';
 import React from 'react';
 import { faCloud } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { LinearGradient } from 'expo-linear-gradient';
+import moment from 'moment';
+import { AnimatedGradient } from './AnimatedGradient';
 
+const AnimatedGradientView = Animated.createAnimatedComponent(AnimatedGradient);
 class Scene extends React.Component {
   screenWidth = Dimensions.get('screen').width
   cloudsAnimValue = [new Animated.Value(1), new Animated.Value(1)]
+  dayCycleAnimValue = new Animated.Value(0)
 
   constructor() {
+    currentDate = new Date()
     super()
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.animateDayCycle()
     this.animateClouds()
+  }
+
+  animateDayCycle() {
+    const currentMinutes = moment(currentDate).format("H") * 60; // kinda current time in minutes
+    this.dayCycleAnimValue.setValue(currentMinutes)
+
+    Animated.timing(
+      this.dayCycleAnimValue, {
+        toValue: currentMinutes + 10,
+        duration: 600000 // 10 minutes
+      }
+    ).start(() => this.animateDayCycle())
   }
 
   animateClouds() {
     this.cloudsAnimValue[0].setValue(1),
     this.cloudsAnimValue[1].setValue(1)
+
     Animated.parallel([
       Animated.timing(
         this.cloudsAnimValue[0], {
@@ -40,6 +59,16 @@ class Scene extends React.Component {
   }
 
   render() {
+    const day = moment(currentDate).format("HH") * 60;
+    const dayGradient = this.dayCycleAnimValue.interpolate({
+      inputRange: [0, 12*60, 24*60],
+      outputRange: ['rgb(20, 21, 24)', 'rgb(104, 195, 235)', 'rgb(20, 21, 24)'],
+    });
+    const dayGradientDark = this.dayCycleAnimValue.interpolate({
+      inputRange: [0, 12*60, 24*60],
+      outputRange: ['rgb(7, 69, 94)', 'rgb(247, 254, 197)', 'rgb(7, 69, 94)'],
+    });
+
     const cloudPosX = this.cloudsAnimValue[0].interpolate({
       inputRange: [0, 1],
       outputRange: [-100, this.screenWidth + 100],
@@ -52,10 +81,11 @@ class Scene extends React.Component {
     })
     return(
       <View style={styles.container}>
-        <LinearGradient
-          colors={['#b9e0f7', '#68b3f9']}
+        <AnimatedGradientView
+          color1={dayGradient}
+          color2={dayGradientDark}
           style={styles.gradient}>
-        </LinearGradient>
+        </AnimatedGradientView>
         <Animated.View
           style={[styles.cloud, {
           transform: [{translateX: cloudPosX}],
@@ -78,6 +108,7 @@ class Scene extends React.Component {
           size={100}
           color={'#d9f5fc'} />
         </Animated.View>
+        <Text>cjasdasd {day}</Text>
         <LinearGradient
           colors={['#49842f', '#243f18']}
           style={styles.floor}>
@@ -92,9 +123,6 @@ const styles = {
     flex: 1
   },
   gradient: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
     flex: 1,
   },
   cloud: {
@@ -102,12 +130,12 @@ const styles = {
     top: 120
   },
   floor: {
-    // 一_一 some un-hardcoded way of doing it here for landscape responsiveness
+    // @TODO 一_一 some un-hardcoded way of doing it here for landscape responsiveness
     position: 'absolute',
     width: 300,
     height: 250,
-    borderRadius: 200,
-    bottom: -180,
+    borderRadius: 300,
+    bottom: -60,
     transform: [
       { scaleX: 3,}
     ],
