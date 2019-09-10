@@ -1,15 +1,14 @@
+import React from 'react';
 import { Modal, Animated, Alert, StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import * as Font from 'expo-font';
-import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faPlusSquare, faCookieBite, faCloud, faTimes } from '@fortawesome/free-solid-svg-icons';
-import React from 'react';
+import { faPlusSquare, faCookieBite, faTimes } from '@fortawesome/free-solid-svg-icons';
 import * as Progress from 'react-native-progress';
-import { APP_CONSTANTS } from '../constants';
+import { APP_CONSTANTS } from '../Constants';
 import { Audio } from 'expo';
-import EggSvg from '../components/svg/egg';
+import EggSvg from '../components/svg/Egg';
+import Scene from '../components/Scene';
 
-const source = require('app/assets/sounds/close_pop.mp3');
 class MainScreen extends React.Component {
     static navigationOptions = {
         header: null,
@@ -24,11 +23,9 @@ class MainScreen extends React.Component {
   
     constructor() {
       super()
-      this.animatedValue = new Animated.Value(0)
-      this.springValue = new Animated.Value(0.3)
     }
 
-    // not working on expo, need to check
+    // @TODO not working on expo, need to check
     async playSound() {
       const soundObject = new Audio.Sound();
       try {
@@ -43,16 +40,15 @@ class MainScreen extends React.Component {
     }
 
     async componentDidMount() {
-      setTimeout(() => {
-        this.setModalVisible(true);
-      }, 1000)
+      // setTimeout(() => {
+      //   this.setModalVisible(true);
+      // }, 1000)
 
       await Font.loadAsync({
         'Press Start 2P': require('app/assets/fonts/PressStart2P-Regular.ttf'),
       });
   
       this.setState({ fontLoaded: true })
-      this.animateTitle()
     }
 
     setModalVisible(visible) {
@@ -62,6 +58,7 @@ class MainScreen extends React.Component {
     render() {
       return (
         <View style={styles.container}>
+          <Scene />
           <Modal
             animationType="fade"
             transparent={true}
@@ -87,30 +84,6 @@ class MainScreen extends React.Component {
                 </View>
               </View>
           </Modal>
-          <LinearGradient
-            colors={['#b9e0f7', '#68b3f9']}
-            style={styles.gradient}>
-          </LinearGradient>
-          {/* extract clouds, randomize and animate */}
-          <View 
-            style={[styles.cloud, {
-              right: 20,
-              top: 110}
-            ]}>
-            <FontAwesomeIcon
-              icon={faCloud}
-              size={100}
-              color={'#d9f5fc'}/>
-          </View>
-          <View style={[styles.cloud, {
-              left: 20,
-              top: 90
-          }]}>
-          <FontAwesomeIcon
-            icon={faCloud}
-            size={100}
-            color={'#d9f5fc'}/>
-          </View>
           <View style={styles.topMenu}>
             <View style={styles.barWrapper}>
               <FontAwesomeIcon
@@ -143,10 +116,6 @@ class MainScreen extends React.Component {
                 height={20}/>
             </View>
           </View>
-          <LinearGradient
-            colors={['#49842f', '#243f18']}
-            style={styles.floor}>
-          </LinearGradient>
           <EggSvg style={styles.egg}/>
         </View>
       )
@@ -157,17 +126,6 @@ class MainScreen extends React.Component {
     container: {
       flex: 1,
       padding: 0
-    },
-    gradient: {
-      position: 'absolute',
-      width: '100%',
-      height: '100%',
-      flex: 1,
-    },
-    cloud: {
-      position: 'absolute',
-      right: 0,
-      top: 120
     },
     topMenu: {
       position: 'absolute',
@@ -184,18 +142,6 @@ class MainScreen extends React.Component {
     },
     icon: {
       marginRight: 10
-    },
-    floor: {
-      // 一_一 some un-hardcoded way of doing it here for landscape responsiveness
-      position: 'absolute',
-      width: 300,
-      height: 250,
-      borderRadius: 200,
-      bottom: -180,
-      transform: [
-        { scaleX: 3,}
-      ],
-      backgroundColor: '#49842f',
     },
     modalOuter: {
       flex: 1,
@@ -220,16 +166,6 @@ class MainScreen extends React.Component {
       shadowRadius: 10,
       elevation: 5,
     },
-    egg: {
-      position: 'absolute',
-      alignSelf: 'center',
-      transform: [
-        {
-          scale: 2
-        }
-      ],
-      bottom: 0
-    },
     modalText: {
       textAlign: 'center',
       fontSize: 30,
@@ -245,6 +181,16 @@ class MainScreen extends React.Component {
       position: 'absolute',
       top: 0,
       right: 0
-    }
+    },
+    egg: {
+      position: 'absolute',
+      alignSelf: 'center',
+      transform: [
+        {
+          scale: 2
+        }
+      ],
+      bottom: 0
+    },
   });
   export default MainScreen;

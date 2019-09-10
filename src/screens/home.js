@@ -3,7 +3,7 @@ import * as Font from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import { APP_CONSTANTS } from '../constants';
+import { APP_CONSTANTS } from '../Constants';
 
 class HomeScreen extends React.Component {
     static navigationOptions = {
@@ -40,7 +40,6 @@ class HomeScreen extends React.Component {
             friction: 1
           }
         ),
-  
         Animated.timing(
           this.animatedValue,
           {
@@ -54,7 +53,7 @@ class HomeScreen extends React.Component {
   
     render() {
       const {navigate} = this.props.navigation;
-      // 一_一 back and fort osc, any better way to do this?
+      // @TODO 一_一 back and fort osc, any better way to do this?
       const rotateZ = this.animatedValue.interpolate({
         inputRange: [0, 0.25, 0.5, 0.75, 1],
         outputRange: ['0deg', '-5deg', '0deg', '5deg', '0deg']
