@@ -1,14 +1,14 @@
 import React from 'react'
 import Svg, { Defs, Path, RadialGradient, Stop, Use } from 'react-native-svg'
 
-class CluimbiSvg extends React.Component {
+class CluimbisetiSvg extends React.Component {
   render() {
     return (
     <Svg
       viewBox="213.093 298.777 215.813 217.904"
       width={128}
       height={128}
-      {...props}
+      {...this.props}
     >
       <Defs>
         <Path
@@ -127,4 +127,4 @@ class CluimbiSvg extends React.Component {
   }
 }
 
-export default CluimbiSvg
+export default CluimbisetiSvg

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Animated, Alert, StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
+import { Modal, Alert, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import * as Font from 'expo-font';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPlusSquare, faCookieBite, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -8,21 +8,23 @@ import { APP_CONSTANTS } from '../Constants';
 import { Audio } from 'expo-av';
 import Scene from '../components/Scene';
 import Egg from '../components/Egg';
+import Cluimbiseti from '../components/Cluimbiseti';
 
 class MainScreen extends React.Component {
     static navigationOptions = {
         header: null,
-    };
+    }
 
-    modalText = 'HEY! Es hora de criar tu Cluimbiseti™';
+    modalText = 'HEY! Es hora de criar tu Cluimbiseti™'
 
     state = {
       fontLoaded: false,
       modalVisible: false
-    };
+    }
   
     constructor() {
       super()
+      this.eggElement = React.createRef()
     }
 
     // @TODO not working on expo, need to check
@@ -123,7 +125,9 @@ class MainScreen extends React.Component {
             </View>
           </View>
           <View style={styles.egg}>
-            <Egg />
+            <Egg
+              ref={this.eggElement}
+            />
           </View>
         </View>
       )

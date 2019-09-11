@@ -1,4 +1,4 @@
-import { View, Animated, Text, Easing, Dimensions } from 'react-native';
+import { View, Animated, Text, Easing, Dimensions, Alert } from 'react-native';
 import React from 'react';
 import { faCloud } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -60,7 +60,9 @@ class Scene extends React.Component {
   }
 
   isNight() {
-    return moment(currentDate).format("H") > 20
+    // @TODO make realtime
+    const date = moment(currentDate).format("H");
+    return date < 6 || date > 20
   }
 
   render() {
@@ -91,7 +93,7 @@ class Scene extends React.Component {
           style={styles.gradient}>
         </AnimatedGradientView>
         {
-          !this.isNight() ? (
+          !this.isNight() && (
             <Animated.View
               style={[styles.cloud, {
               transform: [{translateX: cloudPosX}],
@@ -116,7 +118,7 @@ class Scene extends React.Component {
               color={'#d9f5fc'}
             />
             </Animated.View>
-          ) : null
+          )
         }
         <LinearGradient
           colors={['#49842f', '#243f18']}
