@@ -6,8 +6,8 @@ import { faPlusSquare, faCookieBite, faTimes } from '@fortawesome/free-solid-svg
 import * as Progress from 'react-native-progress';
 import { APP_CONSTANTS } from '../Constants';
 import { Audio } from 'expo-av';
-import EggSvg from '../components/svg/Egg';
 import Scene from '../components/Scene';
+import Egg from '../components/Egg';
 
 class MainScreen extends React.Component {
     static navigationOptions = {
@@ -58,7 +58,9 @@ class MainScreen extends React.Component {
     render() {
       return (
         <View style={styles.container}>
-          <Scene />
+          <View style={styles.scene}>
+            <Scene />
+          </View>
           <Modal
             animationType="fade"
             transparent={true}
@@ -120,7 +122,9 @@ class MainScreen extends React.Component {
               />
             </View>
           </View>
-          <EggSvg style={styles.egg}/>
+          <View style={styles.egg}>
+            <Egg />
+          </View>
         </View>
       )
     }
@@ -130,6 +134,12 @@ class MainScreen extends React.Component {
     container: {
       flex: 1,
       padding: 0
+    },
+    scene: {
+      position: 'absolute',
+      top: 0,
+      width: '100%',
+      height: '100%',
     },
     topMenu: {
       position: 'absolute',
@@ -191,7 +201,7 @@ class MainScreen extends React.Component {
       alignSelf: 'center',
       transform: [
         {
-          scale: 2
+          scale: 0.8
         }
       ],
       bottom: 0

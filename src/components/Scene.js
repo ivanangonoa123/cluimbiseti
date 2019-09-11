@@ -9,6 +9,7 @@ import { AnimatedGradient } from './AnimatedGradient';
 const AnimatedGradientView = Animated.createAnimatedComponent(AnimatedGradient);
 class Scene extends React.Component {
   screenWidth = Dimensions.get('screen').width
+  screenHeight = Dimensions.get('screen').height
   cloudsAnimValue = [new Animated.Value(1), new Animated.Value(1)]
   dayCycleAnimValue = new Animated.Value(0)
 
@@ -23,7 +24,7 @@ class Scene extends React.Component {
   }
 
   animateDayCycle() {
-    const currentMinutes = moment(currentDate).format("H") * 60; // kinda current time in minutes
+    const currentMinutes = moment(new Date()).format("H") * 60; // kinda current time in minutes
     this.dayCycleAnimValue.setValue(currentMinutes)
 
     Animated.timing(
@@ -63,7 +64,6 @@ class Scene extends React.Component {
   }
 
   render() {
-    const day = moment(currentDate).format("HH") * 60;
     const dayGradient = this.dayCycleAnimValue.interpolate({
       inputRange: [0, 12*60, 24*60],
       outputRange: ['rgb(20, 21, 24)', 'rgb(104, 195, 235)', 'rgb(20, 21, 24)'],
@@ -91,7 +91,7 @@ class Scene extends React.Component {
           style={styles.gradient}>
         </AnimatedGradientView>
         {
-          this.isNight() ? [
+          !this.isNight() ? (
             <Animated.View
               style={[styles.cloud, {
               transform: [{translateX: cloudPosX}],
@@ -104,7 +104,7 @@ class Scene extends React.Component {
               color={'#d9f5fc'}
             />
             </Animated.View>,
-            <Animated.View 
+            <Animated.View
               style={[styles.cloud, {
                 transform: [{translateX: cloudPosX2}],
                 top: 80}
@@ -116,9 +116,8 @@ class Scene extends React.Component {
               color={'#d9f5fc'}
             />
             </Animated.View>
-          ] : null
+          ) : null
         }
-        <Text>cjasdasd {day}</Text>
         <LinearGradient
           colors={['#49842f', '#243f18']}
           style={styles.floor}>
@@ -130,7 +129,8 @@ class Scene extends React.Component {
 
 const styles = {
   container: {
-    flex: 1
+    flex: 1,
+    height: this.screenHeight
   },
   gradient: {
     flex: 1,
@@ -145,7 +145,7 @@ const styles = {
     width: 300,
     height: 250,
     borderRadius: 300,
-    bottom: -60,
+    bottom: -25,
     transform: [
       { scaleX: 3,}
     ],
