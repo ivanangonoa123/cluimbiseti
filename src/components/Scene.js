@@ -58,6 +58,10 @@ class Scene extends React.Component {
     ]).start(() => this.animateClouds());
   }
 
+  isNight() {
+    return moment(currentDate).format("H") > 20
+  }
+
   render() {
     const day = moment(currentDate).format("HH") * 60;
     const dayGradient = this.dayCycleAnimValue.interpolate({
@@ -86,28 +90,34 @@ class Scene extends React.Component {
           color2={dayGradientDark}
           style={styles.gradient}>
         </AnimatedGradientView>
-        <Animated.View
-          style={[styles.cloud, {
-          transform: [{translateX: cloudPosX}],
-          top: 140,
-        }]}
-        >
-        <FontAwesomeIcon
-          icon={faCloud}
-          size={100}
-          color={'#d9f5fc'} />
-        </Animated.View>
-        <Animated.View 
-          style={[styles.cloud, {
-            transform: [{translateX: cloudPosX2}],
-            top: 80}
-          ]}
-        >
-        <FontAwesomeIcon
-          icon={faCloud}
-          size={100}
-          color={'#d9f5fc'} />
-        </Animated.View>
+        {
+          this.isNight() ? [
+            <Animated.View
+              style={[styles.cloud, {
+              transform: [{translateX: cloudPosX}],
+              top: 140,
+            }]}
+            >
+            <FontAwesomeIcon
+              icon={faCloud}
+              size={100}
+              color={'#d9f5fc'}
+            />
+            </Animated.View>,
+            <Animated.View 
+              style={[styles.cloud, {
+                transform: [{translateX: cloudPosX2}],
+                top: 80}
+              ]}
+            >
+            <FontAwesomeIcon
+              icon={faCloud}
+              size={100}
+              color={'#d9f5fc'}
+            />
+            </Animated.View>
+          ] : null
+        }
         <Text>cjasdasd {day}</Text>
         <LinearGradient
           colors={['#49842f', '#243f18']}

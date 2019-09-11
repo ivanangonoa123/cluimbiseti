@@ -90,7 +90,8 @@ class MainScreen extends React.Component {
                 icon={faCookieBite}
                 style={styles.icon}
                 size={32}
-                color={'#e88a43'}/>
+                color={'#e88a43'}
+              />
               <Progress.Bar
                 style={styles.bar}
                 borderWidth={2}
@@ -98,14 +99,16 @@ class MainScreen extends React.Component {
                 progress={0.3}
                 color={'#74c122'}
                 width={200}
-                height={20}/>
+                height={20}
+              />
             </View>
             <View style={styles.barWrapper}>
               <FontAwesomeIcon
                 icon={faPlusSquare}
                 style={styles.icon}
                 size={32}
-                color={'#d11b1b'}/>
+                color={'#d11b1b'}
+              />
               <Progress.Bar
                 style={styles.bar}
                 borderWidth={2}
@@ -113,7 +116,8 @@ class MainScreen extends React.Component {
                 progress={0.8}
                 color={'#d11b1b'}
                 width={200}
-                height={20}/>
+                height={20}
+              />
             </View>
           </View>
           <EggSvg style={styles.egg}/>

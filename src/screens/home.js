@@ -66,7 +66,8 @@ class HomeScreen extends React.Component {
         <View style={styles.container}>
           <LinearGradient
               colors={[APP_CONSTANTS.mainBgColor, APP_CONSTANTS.mainBgColorDark]}
-              style={styles.gradient}>
+              style={styles.gradient}
+          >
           <TouchableWithoutFeedback
             onPress={() => navigate('Main')}
               style={styles.touchable}>
