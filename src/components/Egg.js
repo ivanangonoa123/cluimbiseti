@@ -5,24 +5,21 @@ import Cluimbiseti from './Cluimbiseti';
 
 const CRACKS_LIMIT = 15
 class Egg extends React.Component {
-  cracks = 0;
-
   state = {
-    hatched: false
+    hatched: false,
+    cracks: 0
   }
 
   constructor() {
     super();
-    this.eggSvgElement = React.createRef();
   }
 
   handlePress = () => {
     if (Math.random() > 0.5) {
-      this.cracks++;
-      this.eggSvgElement.current.crack();
+      this.setState({cracks: this.state.cracks + 1})
     }
 
-    if (this.cracks >= CRACKS_LIMIT) {
+    if (this.state.cracks >= CRACKS_LIMIT) {
       this.setState({hatched: true}) // @TODO redux store
     }
   }
@@ -31,7 +28,7 @@ class Egg extends React.Component {
     return(
       !this.state.hatched ?
       <EggSvg
-        ref={this.eggSvgElement}
+        cracks={this.state.cracks}
         onPress={this.handlePress}
       /> :
       <Cluimbiseti />
