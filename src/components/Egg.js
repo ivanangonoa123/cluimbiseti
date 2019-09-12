@@ -1,34 +1,27 @@
 import React from 'react';
 import { Alert, Text } from 'react-native';
 import EggSvg from './svg/EggSvg';
+import { connect } from 'react-redux';
+import { incrementCracks, setHatched } from 'app/src/store/actions/EggActions'
 import Cluimbiseti from './Cluimbiseti';
 
 const CRACKS_LIMIT = 15
 class Egg extends React.Component {
-  state = {
-    hatched: false,
-    cracks: 0
-  }
-
-  constructor() {
-    super();
-  }
-
   handlePress = () => {
     if (Math.random() > 0.5) {
-      this.setState({cracks: this.state.cracks + 1})
+      this.props.crack()
     }
 
-    if (this.state.cracks >= CRACKS_LIMIT) {
-      this.setState({hatched: true}) // @TODO redux store
+    if (this.props.cracks >= CRACKS_LIMIT) {
+      this.props.hatch(true)
     }
   }
 
   render() {
     return(
-      !this.state.hatched ?
+      !this.props.hatched ?
       <EggSvg
-        cracks={this.state.cracks}
+        cracks={this.props.cracks}
         onPress={this.handlePress}
       /> :
       <Cluimbiseti />
@@ -36,4 +29,14 @@ class Egg extends React.Component {
   }
 }
 
-export default Egg;
+const mapStateToProps = (state) => {
+const { cracks, hatched } = state.egg
+  return { cracks, hatched }
+}
+
+const mapDispatchToProps = dispatch => ({
+  crack: () => dispatch(incrementCracks()),
+  hatch: hatched => dispatch(setHatched(hatched))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Egg);

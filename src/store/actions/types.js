@@ -1,0 +1,2 @@
+export const INCREMENT_CRACKS = 'INCREMENT_CRACKS'
+export const SET_HATCHED = 'SET_HATCHED'

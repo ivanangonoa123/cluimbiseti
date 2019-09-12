@@ -8,7 +8,6 @@ import { APP_CONSTANTS } from '../Constants';
 import { Audio } from 'expo-av';
 import Scene from '../components/Scene';
 import Egg from '../components/Egg';
-import Cluimbiseti from '../components/Cluimbiseti';
 
 class MainScreen extends React.Component {
     static navigationOptions = {
@@ -24,7 +23,6 @@ class MainScreen extends React.Component {
   
     constructor() {
       super()
-      this.eggElement = React.createRef()
     }
 
     // @TODO not working on expo, need to check
@@ -125,9 +123,7 @@ class MainScreen extends React.Component {
             </View>
           </View>
           <View style={styles.egg}>
-            <Egg
-              ref={this.eggElement}
-            />
+            <Egg />
           </View>
         </View>
       )
