@@ -1,2 +1,4 @@
 export const INCREMENT_CRACKS = 'INCREMENT_CRACKS'
 export const SET_HATCHED = 'SET_HATCHED'
+export const OPEN_MODAL = 'OPEN_MODAL'
+export const CLOSE_MODAL = 'CLOSE_MODAL'
