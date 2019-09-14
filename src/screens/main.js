@@ -1,7 +1,6 @@
 import React from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
-// import * as Font from 'expo-font';
 import CluModal from '../components/CluModal';
 import Egg from '../components/Egg';
 import MenuTop from '../components/MenuTop';
@@ -28,10 +27,6 @@ class MainScreen extends React.Component {
     setTimeout(() => {
       this.props.openModal(this.modalText)
     }, 1000)
-
-    // await Font.loadAsync({
-    //   'Press Start 2P': require('app/assets/fonts/PressStart2P-Regular.ttf'),
-    // });
 
     this.setState({ fontLoaded: true })
   }
