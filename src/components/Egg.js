@@ -2,7 +2,7 @@ import React from 'react';
 import { Alert, Text } from 'react-native';
 import EggSvg from './svg/EggSvg';
 import { connect } from 'react-redux';
-import { incrementCracks, setHatched } from 'app/src/store/actions/EggActions'
+import { incrementCracks, setHatched } from 'cluimbiseti/src/store/actions/EggActions'
 import Cluimbiseti from './Cluimbiseti';
 
 const CRACKS_LIMIT = 15

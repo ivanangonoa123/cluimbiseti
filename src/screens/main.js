@@ -1,8 +1,7 @@
 import React from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
-import { Audio } from 'expo-av';
-import * as Font from 'expo-font';
+// import * as Font from 'expo-font';
 import CluModal from '../components/CluModal';
 import Egg from '../components/Egg';
 import MenuTop from '../components/MenuTop';
@@ -25,28 +24,14 @@ class MainScreen extends React.Component {
     super()
   }
 
-  // @TODO not working on expo, need to check
-  async playSound() {
-    const soundObject = new Audio.Sound();
-    try {
-      Audio.setIsEnabledAsync(true);
-      await soundObject.loadAsync(require('app/assets/sounds/close_pop.mp3'));
-      await soundObject.playAsync();
-    } catch (error) {
-      Alert.alert('error',
-        'error loading sound'
-      )
-    }
-  }
-
   async componentDidMount() {
     setTimeout(() => {
       this.props.openModal(this.modalText)
     }, 1000)
 
-    await Font.loadAsync({
-      'Press Start 2P': require('app/assets/fonts/PressStart2P-Regular.ttf'),
-    });
+    // await Font.loadAsync({
+    //   'Press Start 2P': require('app/assets/fonts/PressStart2P-Regular.ttf'),
+    // });
 
     this.setState({ fontLoaded: true })
   }

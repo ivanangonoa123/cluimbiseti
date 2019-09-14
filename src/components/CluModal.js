@@ -5,20 +5,35 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { APP_CONSTANTS } from '../Constants';
 import { closeModal } from '../store/actions/CluModalActions';
+import Sound from 'react-native-sound';
 
 class CluModal extends React.Component {
+
+  componentDidMount() {
+    this.closeSound = new Sound('close_pop.mp3', Sound.MAIN_BUNDLE, (error) => {
+      if (error) {
+        console.log('failed to load the sound', error)
+      }
+    })
+  }
+
+  closeModal = () => {
+    this.props.closeModal()
+    this.closeSound.play()
+  }
+
   render() {
     return(
       <Modal
         animationType="fade"
         transparent={true}
         visible={this.props.open}
-        onRequestClose={this.props.closeModal}
+        onRequestClose={this.closeModal}
       >
         <View style={styles.modalOuter}>
           <TouchableOpacity
             style={styles.touchableOverlay}
-            onPressOut={this.props.closeModal}
+            onPressOut={this.closeModal}
           >
             <TouchableWithoutFeedback>
               <View style={styles.modalInner}>
@@ -28,7 +43,7 @@ class CluModal extends React.Component {
                 <View style={styles.modalClose}>
                   <TouchableOpacity
                     underlayColor={APP_CONSTANTS.mainBgColorDark}
-                    onPress={this.props.closeModal}
+                    onPress={this.closeModal}
                   >
                   <FontAwesomeIcon
                     icon={faTimes}

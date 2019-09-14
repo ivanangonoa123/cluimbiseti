@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as Progress from 'react-native-progress';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCookieBite, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
-import { incrementCracks, setHatched } from 'app/src/store/actions/EggActions';
+import { incrementCracks, setHatched } from 'cluimbiseti/src/store/actions/EggActions';
 
 class MenuTop extends React.Component {
   render() {

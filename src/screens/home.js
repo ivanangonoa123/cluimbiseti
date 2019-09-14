@@ -1,6 +1,6 @@
 import { Animated, Easing, StyleSheet, Text, View } from 'react-native';
-import * as Font from 'expo-font';
-import { LinearGradient } from 'expo-linear-gradient';
+// import * as Font from 'expo-font';
+import { LinearGradient } from 'react-native-linear-gradient';
 import React from 'react';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { APP_CONSTANTS } from '../Constants';
@@ -22,9 +22,9 @@ class HomeScreen extends React.Component {
     
     async componentDidMount() {
       // import at app level
-      await Font.loadAsync({
-        'Press Start 2P': require('../../assets/fonts/PressStart2P-Regular.ttf'),
-      });
+      // await Font.loadAsync({
+      //   'Press Start 2P': require('../../assets/fonts/PressStart2P-Regular.ttf'),
+      // });
   
       this.setState({ fontLoaded: true })
       this.animateTitle()
@@ -116,7 +116,7 @@ class HomeScreen extends React.Component {
       justifyContent: 'center'
     },
     title: {
-      fontFamily: 'Press Start 2P',
+      // fontFamily: 'Press Start 2P',
       fontSize: 30,
       textShadowColor: "#000",
       textShadowOffset: {
@@ -128,7 +128,7 @@ class HomeScreen extends React.Component {
       color: 'white'
     },
     cta: {
-      fontFamily: 'Press Start 2P',
+      // fontFamily: 'Press Start 2P',
       fontSize: 15,
       color: 'white'
     }

@@ -2,9 +2,9 @@ import { View, Animated, Text, Easing, Dimensions, Alert } from 'react-native';
 import React from 'react';
 import { faCloud } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { LinearGradient } from 'expo-linear-gradient';
+import LinearGradient from 'react-native-linear-gradient';
 import moment from 'moment';
-import { AnimatedGradient } from './AnimatedGradient';
+import AnimatedGradient from './AnimatedGradient';
 
 const AnimatedGradientView = Animated.createAnimatedComponent(AnimatedGradient);
 class Scene extends React.Component {
