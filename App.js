@@ -8,8 +8,8 @@ import MainScreen from './src/screens/Main';
 import rootReducer from './src/store/reducers'
 
 const MainNavigator = createStackNavigator({
-  Main: {screen: MainScreen},
   Home: {screen: HomeScreen},
+  Main: {screen: MainScreen},
 });
 
 const Navigation = createAppContainer(MainNavigator);

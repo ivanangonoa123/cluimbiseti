@@ -2,6 +2,7 @@ import { Animated, Easing, StyleSheet, Text, View, TouchableWithoutFeedback } fr
 import LinearGradient from 'react-native-linear-gradient';
 import React from 'react';
 import { APP_CONSTANTS } from '../Constants';
+import Sound from 'react-native-sound';
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -19,6 +20,12 @@ class HomeScreen extends React.Component {
   }
 
   componentDidMount() {
+    // @TODO extract to sound player
+    this.closeSound = new Sound('close_pop.mp3', Sound.MAIN_BUNDLE, (error) => {
+      if (error) {
+        console.log('failed to load the sound', error)
+      }
+    })
     this.setState({ fontLoaded: true })
     this.animateTitle()
   }
@@ -62,7 +69,10 @@ class HomeScreen extends React.Component {
           style={styles.gradient}
         >
           <TouchableWithoutFeedback
-            onPress={() => navigate('Main')}
+            onPress={() => {
+              this.closeSound.play()
+              navigate('Main')
+            }}
           >
             <View style={styles.touchableView}>
               {

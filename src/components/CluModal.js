@@ -10,6 +10,7 @@ import Sound from 'react-native-sound';
 class CluModal extends React.Component {
 
   componentDidMount() {
+    // @TODO extract to sound player
     this.closeSound = new Sound('close_pop.mp3', Sound.MAIN_BUNDLE, (error) => {
       if (error) {
         console.log('failed to load the sound', error)
