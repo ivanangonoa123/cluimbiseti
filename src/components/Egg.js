@@ -1,9 +1,7 @@
 import React from 'react';
-import { Alert, Text } from 'react-native';
 import EggSvg from './svg/EggSvg';
 import { connect } from 'react-redux';
 import { incrementCracks, setHatched } from 'cluimbiseti/src/store/actions/EggActions'
-import Cluimbiseti from './Cluimbiseti';
 
 const CRACKS_LIMIT = 15
 class Egg extends React.Component {
@@ -19,19 +17,17 @@ class Egg extends React.Component {
 
   render() {
     return(
-      !this.props.hatched ?
       <EggSvg
         cracks={this.props.cracks}
         onPress={this.handlePress}
-      /> :
-      <Cluimbiseti />
+      />
     )
   }
 }
 
 const mapStateToProps = (state) => {
-const { cracks, hatched } = state.egg
-  return { cracks, hatched }
+  const { cracks } = state.egg
+  return { cracks }
 }
 
 const mapDispatchToProps = dispatch => ({

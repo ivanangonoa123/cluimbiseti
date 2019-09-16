@@ -1,11 +1,13 @@
 import React from 'react';
-import { Alert, StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet, View, Button } from 'react-native';
 import { connect } from 'react-redux';
 import CluModal from '../components/CluModal';
 import Egg from '../components/Egg';
 import MenuTop from '../components/MenuTop';
 import Scene from '../components/Scene';
 import { openModal } from '../store/actions/CluModalActions';
+import Cluimbiseti from '../components/Cluimbiseti';
+import { persistor } from '../store/configureStore'
 
 class MainScreen extends React.Component {
   static navigationOptions = {
@@ -15,24 +17,20 @@ class MainScreen extends React.Component {
   modalText = 'HEY! Es hora de criar tu Cluimbiseti™'
 
   state = {
-    fontLoaded: false,
-    modalVisible: false
   }
 
   constructor() {
     super()
   }
 
-  async componentDidMount() {
-    setTimeout(() => {
-      this.props.openModal(this.modalText)
-    }, 1000)
-
-    this.setState({ fontLoaded: true })
+  componentDidMount() {
+    // setTimeout(() => {
+    //   this.props.openModal(this.modalText)
+    // }, 1000)
   }
 
-  setModalVisible(visible) {
-    this.setState({modalVisible: visible})
+  purge = () => {
+    persistor.purge()
   }
 
   render() {
@@ -41,10 +39,25 @@ class MainScreen extends React.Component {
         <View style={styles.scene}>
           <Scene />
         </View>
-        <MenuTop />
         <CluModal />
-        <View style={styles.egg}>
-          <Egg />
+        {
+          this.props.hatched &&
+          <MenuTop />
+        }
+        {
+          this.props.hatched ?
+          <View style={styles.cluimbiseti}>
+            <Cluimbiseti />
+          </View> :
+          <View style={styles.egg}>
+            <Egg />
+          </View>
+        }
+        <View style={styles.purgeBtn}>
+          <Button
+            title="P"
+            onPress={this.purge}
+          />
         </View>
       </View>
     )
@@ -72,10 +85,29 @@ const styles = StyleSheet.create({
     ],
     bottom: 0
   },
+  cluimbiseti: {
+    alignSelf: 'center',
+    position: 'absolute',
+    bottom: 10
+  },
+  purgeBtn: {
+    opacity: 0.5,
+    fontSize: 10,
+    position: 'absolute',
+    width: 50,
+    height: 30,
+    top: 0,
+    left: 0
+  }
 });
+
+const mapStateToProps = (state) => {
+  const { hatched } = state.egg
+  return { hatched }
+}
 
 const mapDispatchToProps = dispatch => ({
   openModal: text => dispatch(openModal(text))
 })
 
-export default connect(null, mapDispatchToProps)(MainScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(MainScreen);
