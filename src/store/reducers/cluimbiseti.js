@@ -12,7 +12,7 @@ const cluimbiseti = (state = INITIAL_STATE, action) => {
     case UPDATE_STATE:
       return {
         ...state,
-        ...action
+        ...action.newState
       }
     default:
       return state

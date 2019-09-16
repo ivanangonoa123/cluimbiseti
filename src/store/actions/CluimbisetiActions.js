@@ -1,7 +1,8 @@
 import { UPDATE_STATE } from "./types"
 
-export const updateState = () => (
+export const updateState = newState => (
   {
-    type: UPDATE_STATE
+    type: UPDATE_STATE,
+    newState
   }
 )
