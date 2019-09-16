@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   cluimbiseti: {
     alignSelf: 'center',
     position: 'absolute',
-    bottom: 10
+    bottom: 20
   },
   purgeBtn: {
     opacity: 0.5,
@@ -103,7 +103,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   const { hatched } = state.egg
-  return { hatched }
+  const { cluimbiseti } = state
+  return { hatched, cluimbiseti }
 }
 
 const mapDispatchToProps = dispatch => ({

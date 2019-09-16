@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import * as Progress from 'react-native-progress';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faCookieBite, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import { faCookieBite, faPlusSquare, faBed } from '@fortawesome/free-solid-svg-icons';
 import { incrementCracks, setHatched } from 'cluimbiseti/src/store/actions/EggActions';
 
 class MenuTop extends React.Component {
@@ -20,8 +20,8 @@ class MenuTop extends React.Component {
           <Progress.Bar
             style={styles.bar}
             borderWidth={2}
-            borderColor={'rgb(83, 137, 24)'}
-            progress={0.3}
+            borderColor={'rgba(83, 137, 24, 0.5)'}
+            progress={this.props.cluimbiseti.hunger * 0.01}
             color={'#74c122'}
             width={200}
             height={20}
@@ -37,9 +37,26 @@ class MenuTop extends React.Component {
           <Progress.Bar
             style={styles.bar}
             borderWidth={2}
-            borderColor={'rgb(147, 19, 19)'}
-            progress={0.8}
+            borderColor={'rgba(147, 19, 19, 0.5)'}
+            progress={this.props.cluimbiseti.health * 0.01}
             color={'#d11b1b'}
+            width={200}
+            height={20}
+          />
+        </View>
+        <View style={styles.barWrapper}>
+          <FontAwesomeIcon
+            icon={faBed}
+            style={styles.icon}
+            size={32}
+            color={'#4cb7ff'}
+          />
+          <Progress.Bar
+            style={styles.bar}
+            borderWidth={2}
+            borderColor={'rgba(48, 117, 163, 0.5)'}
+            progress={this.props.cluimbiseti.sleep * 0.01}
+            color={'#4cb7ff'}
             width={200}
             height={20}
           />
@@ -69,8 +86,8 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => {
-const { cracks, hatched } = state.egg
-  return { cracks, hatched }
+  const { cluimbiseti } = state
+  return { cluimbiseti }
 }
 
 const mapDispatchToProps = dispatch => ({
