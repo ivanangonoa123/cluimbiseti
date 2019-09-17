@@ -14,8 +14,8 @@ const cluModal = (state = INITIAL_STATE, action) => {
       }
     case CLOSE_MODAL:
       return {
-          ...state,
-          open: false
+        ...state,
+        open: false
       }
     default:
       return state

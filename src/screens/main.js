@@ -2,6 +2,7 @@ import React from 'react';
 import { Alert, StyleSheet, View, Button } from 'react-native';
 import { connect } from 'react-redux';
 import CluModal from '../components/CluModal';
+import CluPickMenu from '../components/CluPickMenu';
 import Egg from '../components/Egg';
 import MenuTop from '../components/MenuTop';
 import Scene from '../components/Scene';
@@ -21,6 +22,7 @@ class MainScreen extends React.Component {
 
   constructor() {
     super()
+    cluPickMenuElement = React.createRef()
   }
 
   componentDidMount() {
@@ -40,6 +42,7 @@ class MainScreen extends React.Component {
           <Scene />
         </View>
         <CluModal />
+        <CluPickMenu ref={cluPickMenuElement}/>
         {
           this.props.hatched &&
           <MenuTop />

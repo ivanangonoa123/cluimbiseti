@@ -14,14 +14,15 @@ class Cluimbiseti extends React.Component {
   }
 
   componentDidMount() {
-    setInterval(this.cluimbisetiTick, 5000)
+    setInterval(this.cluimbisetiTick, 1000)
   }
 
   cluimbisetiTick = () => {
     const newState = { ...this.props.cluimbiseti }
     // @TODO more complex logic
+    // substract current time and previous time
     newState.hunger -= 0.2
-    newState.health -= 0.05
+    newState.health -= 0.2
     newState.sleep -= 0.2
 
     this.props.updateState(newState)

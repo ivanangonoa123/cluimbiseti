@@ -69,12 +69,11 @@ class Scene extends React.Component {
     const dayGradient = this.dayCycleAnimValue.interpolate({
       inputRange: [0, 12*60, 24*60],
       outputRange: ['rgb(20, 21, 24)', 'rgb(104, 195, 235)', 'rgb(20, 21, 24)'],
-    });
+    })
     const dayGradientDark = this.dayCycleAnimValue.interpolate({
       inputRange: [0, 12*60, 24*60],
       outputRange: ['rgb(7, 69, 94)', 'rgb(247, 254, 197)', 'rgb(7, 69, 94)'],
-    });
-
+    })
     const cloudPosX = this.cloudsAnimValue[0].interpolate({
       inputRange: [0, 1],
       outputRange: [-100, this.screenWidth + 100],
@@ -155,4 +154,4 @@ const styles = {
   }
 }
 
-export default Scene;
+export default Scene
