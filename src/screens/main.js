@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, StyleSheet, View, Button } from 'react-native';
+import { Alert, StyleSheet, View, Button, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import CluModal from '../components/CluModal';
 import CluPickMenu from '../components/CluPickMenu';
@@ -9,6 +9,10 @@ import Scene from '../components/Scene';
 import { openModal } from '../store/actions/CluModalActions';
 import Cluimbiseti from '../components/Cluimbiseti';
 import { persistor } from '../store/configureStore'
+import { faUtensils } from '@fortawesome/free-solid-svg-icons';
+import { APP_CONSTANTS } from '../Constants';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import PickElement from '../components/PickElement';
 
 class MainScreen extends React.Component {
   static navigationOptions = {
@@ -22,7 +26,15 @@ class MainScreen extends React.Component {
 
   constructor() {
     super()
-    cluPickMenuElement = React.createRef()
+    this.cluPickMenuElement = React.createRef()
+  }
+
+  togglePickMenu = () => {
+    this.cluPickMenuElement.current.toggleModal(null, true)
+  }
+
+  itemPicked = (item) => {
+    // Alert.alert('item picked', item.name)
   }
 
   componentDidMount() {
@@ -42,10 +54,26 @@ class MainScreen extends React.Component {
           <Scene />
         </View>
         <CluModal />
-        <CluPickMenu ref={cluPickMenuElement}/>
+        <CluPickMenu
+          pickItemCallback={this.itemPicked}
+          ref={this.cluPickMenuElement}
+        />
         {
-          this.props.hatched &&
-          <MenuTop />
+          this.props.hatched && [
+            <MenuTop key={"menuTop"}/>,
+            <TouchableOpacity
+              key={"pickButton"}
+              style={styles.pickerButton}
+              underlayColor={APP_CONSTANTS.mainBgColorDark}
+              onPress={this.togglePickMenu}
+            >
+              <FontAwesomeIcon
+                icon={faUtensils}
+                size={50}
+                color={APP_CONSTANTS.mainBgColorDark}
+              />
+            </TouchableOpacity>
+          ]
         }
         {
           this.props.hatched ?
@@ -56,6 +84,7 @@ class MainScreen extends React.Component {
             <Egg />
           </View>
         }
+        <PickElement />
         <View style={styles.purgeBtn}>
           <Button
             title="P"
@@ -97,10 +126,30 @@ const styles = StyleSheet.create({
     opacity: 0.5,
     fontSize: 10,
     position: 'absolute',
+    borderRadius: 50,
     width: 50,
     height: 30,
     top: 0,
     left: 0
+  },
+  pickerButton: {
+    backgroundColor: APP_CONSTANTS.mainBgColor,
+    borderRadius: 50,
+    padding: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    width: 70,
+    height: 70,
+    right: 20,
+    bottom: 200,
+    textShadowColor: "#000",
+    textShadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    textShadowRadius:5,
+    elevation: 5
   }
 });
 

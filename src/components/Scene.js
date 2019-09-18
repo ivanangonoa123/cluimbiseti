@@ -92,20 +92,22 @@ class Scene extends React.Component {
           style={styles.gradient}>
         </AnimatedGradientView>
         {
-          !this.isNight() && (
+          !this.isNight() && ([
             <Animated.View
+              key={"cloud1"}
               style={[styles.cloud, {
-              transform: [{translateX: cloudPosX}],
-              top: 140,
-            }]}
+                transform: [{translateX: cloudPosX}],
+                top: 140,
+              }]}
             >
             <FontAwesomeIcon
               icon={faCloud}
               size={100}
-              color={'#d9f5fc'}
+              color={"#d9f5fc"}
             />
             </Animated.View>,
             <Animated.View
+              key={"cloud2"}
               style={[styles.cloud, {
                 transform: [{translateX: cloudPosX2}],
                 top: 80}
@@ -114,13 +116,13 @@ class Scene extends React.Component {
             <FontAwesomeIcon
               icon={faCloud}
               size={100}
-              color={'#d9f5fc'}
+              color={"#d9f5fc"}
             />
             </Animated.View>
-          )
+          ])
         }
         <LinearGradient
-          colors={['#49842f', '#243f18']}
+          colors={["#49842f", "#243f18"]}
           style={styles.floor}>
         </LinearGradient>
       </View>
