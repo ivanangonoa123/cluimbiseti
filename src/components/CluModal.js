@@ -2,8 +2,7 @@ import React from 'react';
 import { Modal, StyleSheet, Text, View, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { APP_CONSTANTS } from '../Constants';
+import { APP_CONSTANTS } from '../constants';
 import { closeModal } from '../store/actions/CluModalActions';
 import Sound from 'react-native-sound';
 
@@ -47,7 +46,7 @@ class CluModal extends React.Component {
                     onPress={this.closeModal}
                   >
                   <FontAwesomeIcon
-                    icon={faTimes}
+                    icon={'times'}
                     size={50}
                     color={APP_CONSTANTS.mainBgColorDark}
                   />

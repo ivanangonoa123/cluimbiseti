@@ -1,7 +1,7 @@
 import { Animated, Easing, StyleSheet, Text, View, TouchableWithoutFeedback } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import React from 'react';
-import { APP_CONSTANTS } from '../Constants';
+import { APP_CONSTANTS } from '../constants';
 import Sound from 'react-native-sound';
 
 class HomeScreen extends React.Component {

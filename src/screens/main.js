@@ -10,7 +10,7 @@ import { openModal } from '../store/actions/CluModalActions';
 import Cluimbiseti from '../components/Cluimbiseti';
 import { persistor } from '../store/configureStore'
 import { faUtensils } from '@fortawesome/free-solid-svg-icons';
-import { APP_CONSTANTS } from '../Constants';
+import { APP_CONSTANTS } from '../constants';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import PickElement from '../components/PickElement';
 

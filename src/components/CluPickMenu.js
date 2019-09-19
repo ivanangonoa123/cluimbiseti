@@ -1,8 +1,7 @@
 import React from 'react'
 import { View, StyleSheet, TouchableOpacity, FlatList, Modal } from 'react-native'
-// import Modal from "react-native-modal"; 
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { APP_CONSTANTS } from '../Constants';
+import { APP_CONSTANTS } from '../constants';
 
 class CluPickMenu extends React.Component {
   foodItems = [

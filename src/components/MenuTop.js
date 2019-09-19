@@ -3,7 +3,6 @@ import { View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import * as Progress from 'react-native-progress';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faCookieBite, faPlusSquare, faBed } from '@fortawesome/free-solid-svg-icons';
 import { incrementCracks, setHatched } from 'cluimbiseti/src/store/actions/EggActions';
 
 class MenuTop extends React.Component {
@@ -12,7 +11,7 @@ class MenuTop extends React.Component {
       <View style={styles.topMenu}>
         <View style={styles.barWrapper}>
           <FontAwesomeIcon
-            icon={faCookieBite}
+            icon={'cookie-bite'}
             style={styles.icon}
             size={32}
             color={'#e88a43'}
@@ -29,7 +28,7 @@ class MenuTop extends React.Component {
         </View>
         <View style={styles.barWrapper}>
           <FontAwesomeIcon
-            icon={faPlusSquare}
+            icon={'plus-square'}
             style={styles.icon}
             size={32}
             color={'#d11b1b'}
@@ -46,7 +45,7 @@ class MenuTop extends React.Component {
         </View>
         <View style={styles.barWrapper}>
           <FontAwesomeIcon
-            icon={faBed}
+            icon={'bed'}
             style={styles.icon}
             size={32}
             color={'#4cb7ff'}
