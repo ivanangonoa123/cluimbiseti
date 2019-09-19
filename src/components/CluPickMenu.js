@@ -1,28 +1,15 @@
 import React from 'react'
-import { View, ScrollView, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, FlatList, Modal } from 'react-native'
+// import Modal from "react-native-modal"; 
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faTimes, faCookie, faFish, faPizzaSlice, faAppleAlt} from '@fortawesome/free-solid-svg-icons';
-import Modal from "react-native-modal"; 
 import { APP_CONSTANTS } from '../Constants';
 
 class CluPickMenu extends React.Component {
   foodItems = [
-    { id: 0, name: 'Cookie', icon: faCookie, color: '#f2e5b3', price: 10 },
-    { id: 1, name: 'Fish', icon: faFish, color: '#a6b1c4', price: 20 },
-    { id: 2, name: 'Fish', icon: faFish, color: '#a6b1c4', price: 20 },
-    { id: 3, name: 'Fish', icon: faFish, color: '#a6b1c4', price: 20 },
-    { id: 4, name: 'Fish', icon: faFish, color: '#a6b1c4', price: 20 },
-    { id: 5, name: 'Fish', icon: faFish, color: '#a6b1c4', price: 20 },
-    { id: 6, name: 'Fish', icon: faFish, color: '#a6b1c4', price: 20 },
-    { id: 7, name: 'Fish', icon: faFish, color: '#a6b1c4', price: 20 },
-    { id: 8, name: 'Fish', icon: faFish, color: '#a6b1c4', price: 20 },
-    { id: 9, name: 'Fish', icon: faFish, color: '#a6b1c4', price: 20 },
-    { id: 10, name: 'Fish', icon: faFish, color: '#a6b1c4', price: 20 },
-    { id: 11, name: 'Fish', icon: faFish, color: '#a6b1c4', price: 20 },
-    { id: 12, name: 'Fish', icon: faFish, color: '#a6b1c4', price: 20 },
-    { id: 13, name: 'Fish', icon: faFish, color: '#a6b1c4', price: 20 },
-    { id: 14, name: 'Apple', icon: faAppleAlt, color: '#c91a28', price: 10 },
-    { id: 15, name: 'Pizza', icon: faPizzaSlice, color: '#ffd666', price: 10 },
+    { id: 0, name: 'Cookie', icon: 'cookie', color: '#f2e5b3', price: 10 },
+    { id: 1, name: 'Fish', icon: 'fish', color: '#a6b1c4', price: 20 },
+    { id: 14, name: 'Apple', icon: 'apple-alt', color: '#c91a28', price: 10 },
+    { id: 15, name: 'Pizza', icon: 'pizza-slice', color: '#ffd666', price: 10 },
   ]
 
   state = {
@@ -34,27 +21,21 @@ class CluPickMenu extends React.Component {
     this.toggleModal()
   }
 
-  toggleModal = (event, isVisible) => {
+  toggleModal = (isVisible) => {
     this.setState({ isVisible: isVisible || !this.state.isVisible })
   }
 
   render() {
     return (
       <Modal
-        isVisible={this.state.isVisible}
-        animationIn={"fadeIn"}
-        animationOut={"fadeOut"}
-        hideModalContentWhileAnimating={true}
-        backdropTransitionInTiming={0}
-        backdropTransitionOutTiming={0}
-      >
+        visible={this.state.isVisible}>
         <View style={styles.menuContainer}>
           <TouchableOpacity
             underlayColor={APP_CONSTANTS.mainBgColorDark}
-            onPress={this.toggleModal}
+            onPress={() => this.toggleModal(false)}
           >
             <FontAwesomeIcon
-              icon={faTimes}
+              icon={'times'}
               size={50}
               color={APP_CONSTANTS.mainBgColorDark}
             />

@@ -143,9 +143,8 @@ const styles = {
     top: 120
   },
   floor: {
-    // @TODO 一_一 some un-hardcoded way of doing it here for landscape responsiveness
     position: 'absolute',
-    width: 300,
+    width: Dimensions.get('screen').width,
     height: 250,
     borderRadius: 300,
     bottom: -25,

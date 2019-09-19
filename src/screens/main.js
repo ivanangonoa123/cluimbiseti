@@ -22,6 +22,7 @@ class MainScreen extends React.Component {
   modalText = 'HEY! Es hora de criar tu Cluimbiseti™'
 
   state = {
+    pickItem: null
   }
 
   constructor() {
@@ -30,10 +31,11 @@ class MainScreen extends React.Component {
   }
 
   togglePickMenu = () => {
-    this.cluPickMenuElement.current.toggleModal(null, true)
+    this.cluPickMenuElement.current.toggleModal(true)
   }
 
-  itemPicked = (item) => {
+  setPickItem = item => {
+    this.setState({pickItem: item})
     // Alert.alert('item picked', item.name)
   }
 
@@ -55,7 +57,7 @@ class MainScreen extends React.Component {
         </View>
         <CluModal />
         <CluPickMenu
-          pickItemCallback={this.itemPicked}
+          pickItemCallback={this.setPickItem}
           ref={this.cluPickMenuElement}
         />
         {
@@ -84,7 +86,15 @@ class MainScreen extends React.Component {
             <Egg />
           </View>
         }
-        <PickElement />
+        {
+          this.state.pickItem &&
+          <View style={styles.pickElement}>
+            <PickElement
+              itemReleased={() => this.setPickItem(null)}
+              item={this.state.pickItem}
+            />
+          </View>
+        }
         <View style={styles.purgeBtn}>
           <Button
             title="P"
@@ -150,6 +160,11 @@ const styles = StyleSheet.create({
     },
     textShadowRadius:5,
     elevation: 5
+  },
+  pickElement: {
+    position: 'absolute',
+    alignSelf: 'center',
+    top: '20%'
   }
 });
 
