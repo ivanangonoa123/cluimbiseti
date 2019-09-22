@@ -1,20 +1,50 @@
 import React from 'react';
-import { Alert, Text } from 'react-native';
+import { View, Alert, Text, PanResponder } from 'react-native';
 import CluimbisetiSvg from './svg/CluimbisetiSvg';
 import { updateState } from '../store/actions/CluimbisetiActions';
 import { connect } from 'react-redux';
 
 class Cluimbiseti extends React.Component {
   state = {
+    collision: false,
+    hitTest: false
   }
 
-  constructor() {
-    super();
-    this.cluimbisetiSvgElement = React.createRef();
+  constructor(props) {
+    super(props)
+    this.cluimbisetiSvgElement = React.createRef()
+    setInterval(this.cluimbisetiTick, 5000)
+    setInterval(this.cluimbisetiHitTest, 50)
+
+    this.panResponder = PanResponder.create({
+      onStartShouldSetPanResponder: (evt, gestureState) => true,
+      onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
+      onMoveShouldSetPanResponder: (evt, gestureState) => true,
+      onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+      onPanResponderGrant: (e, gestureState) => {
+        this.setState({collision: true})
+      },
+      onPanResponderStart: () => {
+        this.setState({collision: true})
+      },
+      onPanResponderMove: () => {
+        this.setState({collision: true})
+      },
+      onPanResponderEnd: () => {
+        this.setState({collision: false})
+      }
+    })
   }
 
-  componentDidMount() {
-    setInterval(this.cluimbisetiTick, 1000)
+  eat = () => {
+    const newState = { ...this.props.cluimbiseti }
+    newState.hunger += 1
+
+    this.props.updateState(newState)
+  }
+
+  cluimbisetiHitTest = () => {
+
   }
 
   cluimbisetiTick = () => {
@@ -28,15 +58,16 @@ class Cluimbiseti extends React.Component {
     this.props.updateState(newState)
   }
 
-  handlePress = () => {
-  }
-
   render() {
+    const bgColor = this.state.collision ? 'red' : 'white'
     return(
-      <CluimbisetiSvg
-        ref={this.cluimbisetiSvgElement}
-        onPress={this.handlePress}
-      />
+      <View
+        {...this.panResponder.panHandlers}
+        style={{backgroundColor: bgColor}}>
+        <CluimbisetiSvg
+          ref={this.cluimbisetiSvgElement}
+        />
+      </View>
     )
   }
 }

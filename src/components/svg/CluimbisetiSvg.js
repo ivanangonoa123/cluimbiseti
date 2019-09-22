@@ -1,7 +1,7 @@
 import React from 'react'
 import Svg, { Defs, Path, RadialGradient, Stop, Use } from 'react-native-svg'
 
-class CluimbisetiSvg extends React.Component {
+class CluimbisetiSvg extends React.PureComponent {
   render() {
     return (
     <Svg

@@ -1,6 +1,6 @@
 // learned from https://snack.expo.io/@yoobidev/draggable-component
 import React from 'react'
-import { StyleSheet, View, PanResponder, Animated, Dimensions } from 'react-native'
+import { StyleSheet, View, PanResponder, Animated } from 'react-native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 
 class PickElement extends React.Component {
@@ -11,9 +11,6 @@ class PickElement extends React.Component {
 
   constructor() {
     super()
-  }
-
-  componentWillMount() {
     this.val = { x: 0, y: 0 }
     this.state.pan.addListener(value => this.val = value);
 
@@ -39,16 +36,17 @@ class PickElement extends React.Component {
           }),
           Animated.timing(this.state.opacity, {
             toValue: 0,
-            duration: 400
+            duration: 200
           }),
         ]).start(()=> {
+          // fade animation end
           this.state.pan.setValue({ x:0, y:0})
           this.state.opacity.setValue(1)
           this.props.itemReleased();
         })
       }
     })
- }
+  }
 
  render() {
    const panStyle = {

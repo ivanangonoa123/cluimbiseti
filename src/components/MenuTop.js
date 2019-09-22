@@ -5,7 +5,7 @@ import * as Progress from 'react-native-progress';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { incrementCracks, setHatched } from 'cluimbiseti/src/store/actions/EggActions';
 
-class MenuTop extends React.Component {
+class MenuTop extends React.PureComponent {
   render() {
     return(
       <View style={styles.topMenu}>

@@ -30,7 +30,7 @@ class Scene extends React.Component {
     Animated.timing(
       this.dayCycleAnimValue, {
         toValue: currentMinutes + 10,
-        duration: 600000 // 10 minutes
+        duration: 600000, // 10 minutes
       }
     ).start(() => this.animateDayCycle())
   }
@@ -45,7 +45,8 @@ class Scene extends React.Component {
           toValue: 0,
           duration: Math.random() * 5000 + 12000,
           easing: Easing.linear,
-          delay: Math.random() * 2000
+          delay: Math.random() * 2000,
+          useNativeDriver: true
         }
       ),
       Animated.timing(
@@ -53,7 +54,8 @@ class Scene extends React.Component {
           toValue: 0,
           duration: Math.random() * 5000 + 12000,
           easing: Easing.linear,
-          delay: Math.random() * 2000
+          delay: Math.random() * 2000,
+          useNativeDriver: true
         }
       )
     ]).start(() => this.animateClouds());

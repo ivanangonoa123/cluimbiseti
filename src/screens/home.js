@@ -37,7 +37,8 @@ class HomeScreen extends React.Component {
       // after decay, in parallel:
       Animated.spring(this.springValue, {
           toValue: 1,
-          friction: 1
+          friction: 1,
+          useNativeDriver: true
         }
       ),
       Animated.timing(
@@ -45,7 +46,8 @@ class HomeScreen extends React.Component {
         {
           toValue: 1,
           duration: 2000,
-          easing: Easing.easeOut
+          easing: Easing.easeOut,
+          useNativeDriver: true
         }
       )
     ]).start(() => this.animateTitle())

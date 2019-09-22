@@ -1,9 +1,9 @@
 // Taken from https://github.com/dslounge/rn-animated-gradient-example/
 
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import LinearGradient from 'react-native-linear-gradient';
 
-export class AnimatedGradient extends Component {
+export class AnimatedGradient extends PureComponent {
   render() {
     const {
       style,
