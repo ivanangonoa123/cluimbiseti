@@ -13,6 +13,7 @@ import { faUtensils } from '@fortawesome/free-solid-svg-icons';
 import { APP_CONSTANTS } from '../constants';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import PickElement from '../components/PickElement';
+import { updateState } from '../store/actions/CluimbisetiActions';
 
 class MainScreen extends React.Component {
   static navigationOptions = {
@@ -38,6 +39,17 @@ class MainScreen extends React.Component {
   setPickItem = item => {
     this.setState({pickItem: item})
     // Alert.alert('item picked', item.name)
+  }
+
+  itemReleased = chomp => {
+    if (chomp) {
+      const newState = { ...this.props.cluimbiseti }
+      newState.hunger += this.state.pickItem.energy
+  
+      this.props.updateState(newState)
+    }
+
+    this.setPickItem(null)
   }
 
   setCollision = isCollision => {
@@ -96,7 +108,7 @@ class MainScreen extends React.Component {
           <View style={styles.pickElement}>
             <PickElement
               setCollision={this.setCollision}
-              itemReleased={() => this.setPickItem(null)}
+              itemReleased={this.itemReleased}
               item={this.state.pickItem}
             />
           </View>
@@ -181,7 +193,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  openModal: text => dispatch(openModal(text))
+  openModal: text => dispatch(openModal(text)),
+  updateState: newState => dispatch(updateState(newState))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainScreen);

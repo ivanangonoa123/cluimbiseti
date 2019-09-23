@@ -5,10 +5,10 @@ import { APP_CONSTANTS } from '../constants';
 
 class CluPickMenu extends React.Component {
   foodItems = [
-    { id: 0, name: 'Cookie', icon: 'cookie', color: '#f2e5b3', price: 10 },
-    { id: 1, name: 'Fish', icon: 'fish', color: '#a6b1c4', price: 20 },
-    { id: 14, name: 'Apple', icon: 'apple-alt', color: '#c91a28', price: 10 },
-    { id: 15, name: 'Pizza', icon: 'pizza-slice', color: '#ffd666', price: 10 },
+    { id: 0, name: 'Cookie', icon: 'cookie', color: '#f2e5b3', price: 10, energy: 4 },
+    { id: 1, name: 'Fish', icon: 'fish', color: '#a6b1c4', price: 20, energy: 25 },
+    { id: 14, name: 'Apple', icon: 'apple-alt', color: '#c91a28', price: 10, energy: 6 },
+    { id: 15, name: 'Pizza', icon: 'pizza-slice', color: '#ffd666', price: 10, energy: 15 },
   ]
 
   state = {

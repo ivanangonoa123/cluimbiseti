@@ -57,7 +57,8 @@ class Cluimbiseti extends React.Component {
     return(
       <View
         // {...this.panResponder.panHandlers}
-        style={{backgroundColor: bgColor}}>
+        // style={{backgroundColor: bgColor}}
+      >
         <CluimbisetiSvg
           ref={this.cluimbisetiSvgElement}
         />
