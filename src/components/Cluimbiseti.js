@@ -6,34 +6,32 @@ import { connect } from 'react-redux';
 
 class Cluimbiseti extends React.Component {
   state = {
-    collision: false,
-    hitTest: false
+    // collision: false
   }
 
   constructor(props) {
     super(props)
     this.cluimbisetiSvgElement = React.createRef()
     setInterval(this.cluimbisetiTick, 5000)
-    setInterval(this.cluimbisetiHitTest, 50)
 
-    this.panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: (evt, gestureState) => true,
-      onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
-      onMoveShouldSetPanResponder: (evt, gestureState) => true,
-      onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
-      onPanResponderGrant: (e, gestureState) => {
-        this.setState({collision: true})
-      },
-      onPanResponderStart: () => {
-        this.setState({collision: true})
-      },
-      onPanResponderMove: () => {
-        this.setState({collision: true})
-      },
-      onPanResponderEnd: () => {
-        this.setState({collision: false})
-      }
-    })
+    // this.panResponder = PanResponder.create({
+    //   onStartShouldSetPanResponder: (evt, gestureState) => true,
+    //   onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
+    //   onMoveShouldSetPanResponder: (evt, gestureState) => true,
+    //   onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+    //   onPanResponderGrant: (e, gestureState) => {
+    //     this.setState({collision: true})
+    //   },
+    //   onPanResponderStart: () => {
+    //     this.setState({collision: true})
+    //   },
+    //   onPanResponderMove: () => {
+    //     this.setState({collision: true})
+    //   },
+    //   onPanResponderEnd: () => {
+    //     this.setState({collision: false})
+    //   }
+    // })
   }
 
   eat = () => {
@@ -41,10 +39,6 @@ class Cluimbiseti extends React.Component {
     newState.hunger += 1
 
     this.props.updateState(newState)
-  }
-
-  cluimbisetiHitTest = () => {
-
   }
 
   cluimbisetiTick = () => {
@@ -59,10 +53,10 @@ class Cluimbiseti extends React.Component {
   }
 
   render() {
-    const bgColor = this.state.collision ? 'red' : 'white'
+    const bgColor = this.props.collision ? 'red' : 'white'
     return(
       <View
-        {...this.panResponder.panHandlers}
+        // {...this.panResponder.panHandlers}
         style={{backgroundColor: bgColor}}>
         <CluimbisetiSvg
           ref={this.cluimbisetiSvgElement}

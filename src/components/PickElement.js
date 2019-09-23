@@ -24,26 +24,41 @@ class PickElement extends React.Component {
         this.state.pan.setValue({ x:0, y:0})
         this.state.opacity.setValue(1)
       },
-      onPanResponderMove: Animated.event([
-        null, { dx: this.state.pan.x, dy: this.state.pan.y }
-      ]),
+      onPanResponderMove: (e, gesture) => {
+        console.log(e, gesture)
+        console.log("TCL: PickElement -> constructor -> this.state.pan", this.state.pan)
+        this.state.pan.setValue({ x: gesture.dx, y: gesture.dy })
+
+        // @TODO remove this hardcoding
+        if (gesture.moveX > 160 - 64 &&
+          gesture.moveX < 160 + 64 &&
+          gesture.moveY > 556 - 64 &&
+          gesture.moveY < 556 + 64) {
+          this.props.setCollision(true)
+        } else {
+          this.props.setCollision(false)
+        }
+        // Animated.event([
+        //   null, { dx: this.state.pan.x, dy: this.state.pan.y }
+        // ])
+      },
       onPanResponderRelease: (e, gesture) => {
-        Animated.parallel([
-          Animated.spring(this.state.pan, {
-            toValue: { x: 0, y: -40 },
-            tension: 0.2,
-            friction: 6,
-          }),
-          Animated.timing(this.state.opacity, {
-            toValue: 0,
-            duration: 200
-          }),
-        ]).start(()=> {
-          // fade animation end
-          this.state.pan.setValue({ x:0, y:0})
-          this.state.opacity.setValue(1)
-          this.props.itemReleased();
-        })
+        // Animated.parallel([
+        //   Animated.spring(this.state.pan, {
+        //     toValue: { x: 0, y: -40 },
+        //     tension: 0.2,
+        //     friction: 6,
+        //   }),
+        //   Animated.timing(this.state.opacity, {
+        //     toValue: 0,
+        //     duration: 200
+        //   }),
+        // ]).start(()=> {
+        //   // fade animation end
+        //   this.state.pan.setValue({ x:0, y:0})
+        //   this.state.opacity.setValue(1)
+        //   this.props.itemReleased();
+        // })
       }
     })
   }

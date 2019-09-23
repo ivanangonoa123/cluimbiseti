@@ -22,7 +22,8 @@ class MainScreen extends React.Component {
   modalText = 'HEY! Es hora de criar tu Cluimbiseti™'
 
   state = {
-    pickItem: null
+    pickItem: null,
+    collision: false
   }
 
   constructor() {
@@ -37,6 +38,10 @@ class MainScreen extends React.Component {
   setPickItem = item => {
     this.setState({pickItem: item})
     // Alert.alert('item picked', item.name)
+  }
+
+  setCollision = isCollision => {
+    this.setState({collision: isCollision})
   }
 
   componentDidMount() {
@@ -80,7 +85,7 @@ class MainScreen extends React.Component {
         {
           this.props.hatched ?
           <View style={styles.cluimbiseti}>
-            <Cluimbiseti />
+            <Cluimbiseti collision={this.state.collision} />
           </View> :
           <View style={styles.egg}>
             <Egg />
@@ -90,6 +95,7 @@ class MainScreen extends React.Component {
           this.state.pickItem &&
           <View style={styles.pickElement}>
             <PickElement
+              setCollision={this.setCollision}
               itemReleased={() => this.setPickItem(null)}
               item={this.state.pickItem}
             />
