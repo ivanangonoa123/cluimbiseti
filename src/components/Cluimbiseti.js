@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Alert, Text, PanResponder, AppState } from 'react-native';
+import { View, AppState, StyleSheet, Alert, Text, PanResponder } from 'react-native';
 import CluimbisetiSvg from './svg/CluimbisetiSvg';
 import { updateState } from '../store/actions/CluimbisetiActions';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import SleepHatSvg from './svg/SleephatSvg';
 
 const TICK_TIME = 5000
 
@@ -90,17 +91,34 @@ class Cluimbiseti extends React.Component {
   render() {
     const bgColor = this.props.collision ? 'red' : 'white'
     return(
-      <View
+      <View style={styles.container}
         // {...this.panResponder.panHandlers}
         // style={{backgroundColor: bgColor}}
       >
-        <CluimbisetiSvg
+        <CluimbisetiSvg style={styles.cluimbiseti}
           ref={this.cluimbisetiSvgElement}
         />
+        <SleepHatSvg style={styles.sleepHat}/>
       </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+  },
+  sleepHat: {
+    position: 'absolute',
+    alignSelf: 'center',
+    transform: [{
+      scale: 0.6
+    }],
+    top: -80
+  },
+  cluimbiseti: {
+
+  }
+})
 
 const mapStateToProps = state => {
   const { cluimbiseti } = state
