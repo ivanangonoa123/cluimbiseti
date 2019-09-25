@@ -1,9 +1,10 @@
 import React from 'react';
 import { View, AppState, StyleSheet, Alert, Text, PanResponder } from 'react-native';
-import CluimbisetiSvg from './svg/CluimbisetiSvg';
 import { updateState } from '../store/actions/CluimbisetiActions';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import BodySvg from './svg/BodySvg';
+import EyesSvg from './svg/EyesSvg';
 import SleepHatSvg from './svg/SleephatSvg';
 
 const TICK_TIME = 5000
@@ -62,9 +63,9 @@ class Cluimbiseti extends React.Component {
     const elapsedTime = !lastTime ?
       1 : Math.floor(moment().diff(lastTime, 'ms') / TICK_TIME)
     console.log("TCL: Cluimbiseti -> cluimbisetiTick -> elapsedTime", elapsedTime)
-    newState.hunger -= 0.2 * elapsedTime
-    newState.health -= 0.2 * elapsedTime
-    newState.sleep -= 0.2 * elapsedTime
+    newState.hunger = Math.max(newState.hunger - 0.2 * elapsedTime, 0)
+    newState.health = Math.max(newState.health - 0.2 * elapsedTime, 0)
+    newState.sleep = Math.max(newState.sleep - 0.2 * elapsedTime, 0)
 
     this.props.updateState(newState)
   }
@@ -95,10 +96,11 @@ class Cluimbiseti extends React.Component {
         // {...this.panResponder.panHandlers}
         // style={{backgroundColor: bgColor}}
       >
-        <CluimbisetiSvg style={styles.cluimbiseti}
+        <BodySvg style={styles.body}
           ref={this.cluimbisetiSvgElement}
         />
         <SleepHatSvg style={styles.sleepHat}/>
+        <EyesSvg style={styles.eyes}/>
       </View>
     )
   }
@@ -109,14 +111,25 @@ const styles = StyleSheet.create({
   },
   sleepHat: {
     position: 'absolute',
+    top: -20,
+    alignSelf: 'center',
+    transform: [{
+      scale: 0.7
+    }]
+  },
+  body: {
     alignSelf: 'center',
     transform: [{
       scale: 0.6
-    }],
-    top: -80
+    }]
   },
-  cluimbiseti: {
-
+  eyes: {
+    position: 'absolute',
+    alignSelf: 'center',
+    transform: [{
+      scale: 1.2
+    }],
+    top: 50
   }
 })
 
