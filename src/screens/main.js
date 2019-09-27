@@ -9,11 +9,10 @@ import Scene from '../components/Scene';
 import { openModal } from '../store/actions/CluModalActions';
 import Cluimbiseti from '../components/Cluimbiseti';
 import { persistor } from '../store/configureStore'
-import { faUtensils } from '@fortawesome/free-solid-svg-icons';
 import { APP_CONSTANTS } from '../constants';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import PickElement from '../components/PickElement';
-import { updateState } from '../store/actions/CluimbisetiActions';
+import { updateState, sleep } from '../store/actions/CluimbisetiActions';
 
 class MainScreen extends React.Component {
   static navigationOptions = {
@@ -39,6 +38,10 @@ class MainScreen extends React.Component {
   setPickItem = item => {
     this.setState({pickItem: item})
     // Alert.alert('item picked', item.name)
+  }
+
+  sleep = () => {
+    this.props.sleep()
   }
 
   itemReleased = chomp => {
@@ -67,31 +70,61 @@ class MainScreen extends React.Component {
   }
 
   render() {
+    const sleeping = this.props.cluimbiseti.sleeping
+
     return (
       <View style={styles.container}>
         <View style={styles.scene}>
           <Scene />
         </View>
         <CluModal />
-        <CluPickMenu
-          pickItemCallback={this.setPickItem}
-          ref={this.cluPickMenuElement}
-        />
         {
           this.props.hatched && [
-            <MenuTop key={"menuTop"}/>,
-            <TouchableOpacity
-              key={"pickButton"}
-              style={styles.pickerButton}
-              underlayColor={APP_CONSTANTS.mainBgColorDark}
-              onPress={this.togglePickMenu}
+            <CluPickMenu
+              key="cluPickMenu"
+              pickItemCallback={this.setPickItem}
+              ref={this.cluPickMenuElement}
+            />,
+            <MenuTop
+              key="menuTop"
+            />,
+            <View
+              key="rightMenu"
+              style={styles.rightMenu}
             >
-              <FontAwesomeIcon
-                icon={faUtensils}
-                size={50}
-                color={APP_CONSTANTS.mainBgColorDark}
-              />
-            </TouchableOpacity>
+              <TouchableOpacity
+                disabled={sleeping}
+                style={[
+                  styles.pickerBtn,
+                  styles.foodBtn,
+                  {
+                    opacity: !sleeping ? 1 : 0.5
+                  }
+                ]}
+                underlayColor={APP_CONSTANTS.mainBgColorDark}
+                onPress={this.togglePickMenu}
+              >
+                <FontAwesomeIcon
+                  icon="utensils"
+                  size={50}
+                  color={APP_CONSTANTS.mainBgColorDark}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  styles.pickerBtn,
+                  styles.sleepBtn
+                ]}
+                underlayColor={APP_CONSTANTS.sleepIconBgColorDark}
+                onPress={this.sleep}
+              >
+                <FontAwesomeIcon
+                  icon="bed"
+                  size={50}
+                  color={APP_CONSTANTS.sleepIconBgColorDark}
+                />
+              </TouchableOpacity>
+            </View>
           ]
         }
         {
@@ -153,24 +186,27 @@ const styles = StyleSheet.create({
   purgeBtn: {
     opacity: 0.5,
     fontSize: 10,
-    position: 'absolute',
     borderRadius: 50,
     width: 50,
     height: 30,
     top: 0,
     left: 0
   },
-  pickerButton: {
-    backgroundColor: APP_CONSTANTS.mainBgColor,
+  rightMenu: {
+    flexDirection: 'column',
+    position: 'absolute',
+    justifyContent: 'center',
+    right: 10,
+    bottom : 150
+  },
+  pickerBtn: {
     borderRadius: 50,
     padding: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'absolute',
     width: 70,
     height: 70,
-    right: 20,
-    bottom: 200,
+    marginTop: 5,
     textShadowColor: "#000",
     textShadowOffset: {
       width: 0,
@@ -178,6 +214,12 @@ const styles = StyleSheet.create({
     },
     textShadowRadius:5,
     elevation: 5
+  },
+  foodBtn: {
+    backgroundColor: APP_CONSTANTS.mainBgColor,
+  },
+  sleepBtn: {
+    backgroundColor: APP_CONSTANTS.sleepIconBgColor,
   },
   pickElement: {
     position: 'absolute',
@@ -194,7 +236,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
   openModal: text => dispatch(openModal(text)),
-  updateState: newState => dispatch(updateState(newState))
+  updateState: newState => dispatch(updateState(newState)),
+  sleep: () => dispatch(sleep()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainScreen);

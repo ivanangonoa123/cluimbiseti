@@ -1,4 +1,4 @@
-import { INCREMENT_CRACKS, SET_HATCHED } from "./types"
+import { INCREMENT_CRACKS, SET_HATCHED } from "./types";
 
 export const incrementCracks = () => (
   {

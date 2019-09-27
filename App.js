@@ -2,9 +2,9 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import Navigation from './src/routes';
 import { PersistGate } from 'redux-persist/integration/react';
-import { store, persistor } from './src/store/configureStore'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { 
+import { store, persistor } from './src/store/configureStore';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import {
   faTimes,
   faCookie,
   faCookieBite,
@@ -12,8 +12,10 @@ import {
   faBed,
   faFish,
   faPizzaSlice,
-  faAppleAlt 
-} from '@fortawesome/free-solid-svg-icons'
+  faAppleAlt,
+  faUtensils,
+  faCloud
+} from '@fortawesome/free-solid-svg-icons';
 
 library.add(
   faTimes,
@@ -23,7 +25,9 @@ library.add(
   faBed,
   faFish,
   faPizzaSlice,
-  faAppleAlt
+  faAppleAlt,
+  faUtensils,
+  faCloud
 )
 
 export default class App extends React.Component {

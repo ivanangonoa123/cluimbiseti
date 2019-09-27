@@ -58,7 +58,9 @@ class Cluimbiseti extends React.Component {
     // console.log("TCL: Cluimbiseti -> cluimbisetiTick -> elapsedTime", elapsedTime)
     newState.hunger = Math.max(newState.hunger - 0.05 * elapsedTime, 0)
     newState.health = Math.max(newState.health - 0.05 * elapsedTime, 0)
-    newState.sleep = Math.max(newState.sleep - 0.05 * elapsedTime, 0)
+    newState.sleep = !this.props.cluimbiseti.sleeping ?
+      Math.max(newState.sleep - 0.05 * elapsedTime, 0) :
+      newState.sleep + 0.15
 
     this.props.updateState(newState)
   }
@@ -81,7 +83,7 @@ class Cluimbiseti extends React.Component {
 
   blink = () => {
     this.setState({blinking: true})
-    setTimeout(() => this.setState({blinking: false}), 1500);
+    setTimeout(() => this.setState({blinking: false}), 300);
   }
 
   render() {
@@ -95,12 +97,20 @@ class Cluimbiseti extends React.Component {
           style={styles.body}
           ref={this.cluimbisetiSvgElement}
         />
-        <SleepHatSvg
-          style={styles.sleepHat}
-        />
+        {
+          this.props.cluimbiseti.sleeping &&
+          <SleepHatSvg
+            style={styles.sleepHat}
+          />
+        }
         <EyesSvg
-          eyelidL={this.state.blinking}
-          eyelidR={this.state.blinking}
+          eyelidL={
+            this.props.cluimbiseti.sleeping ||
+            this.state.blinking}
+          eyelidR={
+            this.props.cluimbiseti.sleeping ||
+            this.state.blinking
+          }
           style={styles.eyes}
         />
       </View>

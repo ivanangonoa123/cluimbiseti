@@ -1,6 +1,5 @@
-import { View, Animated, Text, Easing, Dimensions, Alert } from 'react-native';
 import React from 'react';
-import { faCloud } from '@fortawesome/free-solid-svg-icons';
+import { View, Animated, Easing, Dimensions } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import LinearGradient from 'react-native-linear-gradient';
 import moment from 'moment';
@@ -96,27 +95,27 @@ class Scene extends React.Component {
         {
           !this.isNight() && ([
             <Animated.View
-              key={"cloud1"}
+              key="cloud1"
               style={[styles.cloud, {
                 transform: [{translateX: cloudPosX}],
                 top: 140,
               }]}
             >
             <FontAwesomeIcon
-              icon={faCloud}
+              icon="cloud"
               size={100}
               color={"#d9f5fc"}
             />
             </Animated.View>,
             <Animated.View
-              key={"cloud2"}
+              key="cloud2"
               style={[styles.cloud, {
                 transform: [{translateX: cloudPosX2}],
                 top: 80}
               ]}
             >
             <FontAwesomeIcon
-              icon={faCloud}
+              icon="cloud"
               size={100}
               color={"#d9f5fc"}
             />

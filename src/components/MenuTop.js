@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as Progress from 'react-native-progress';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { incrementCracks, setHatched } from 'cluimbiseti/src/store/actions/EggActions';
+import { APP_CONSTANTS } from '../constants';
 
 class MenuTop extends React.PureComponent {
   render() {
@@ -48,14 +49,14 @@ class MenuTop extends React.PureComponent {
             icon={'bed'}
             style={styles.icon}
             size={32}
-            color={'#4cb7ff'}
+            color={APP_CONSTANTS.sleepIconBgColor}
           />
           <Progress.Bar
             style={styles.bar}
             borderWidth={2}
-            borderColor={'rgba(48, 117, 163, 0.5)'}
+            borderColor={APP_CONSTANTS.sleepIconBgColor}
             progress={this.props.cluimbiseti.sleep * 0.01}
-            color={'#4cb7ff'}
+            color={APP_CONSTANTS.sleepIconBgColor}
             width={200}
             height={20}
           />

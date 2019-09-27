@@ -1,4 +1,4 @@
-import { OPEN_MODAL, CLOSE_MODAL } from "./types"
+import { OPEN_MODAL, CLOSE_MODAL } from "./types";
 
 export const openModal = (text) => (
   {
