@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, AppState, StyleSheet, Alert, Text, PanResponder } from 'react-native';
+import { View, AppState, StyleSheet, Animated, Easing, Alert, Text, PanResponder } from 'react-native';
 import { updateState } from '../store/actions/CluimbisetiActions';
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -12,15 +12,16 @@ const TICK_TIME = 5000
 class Cluimbiseti extends React.Component {
   state = {
     // collision: false
-    appState: AppState.currentState
+    appState: AppState.currentState,
+    blinking: false
   }
 
   constructor(props) {
     super(props)
     this.cluimbisetiSvgElement = React.createRef()
-    setInterval(this.cluimbisetiTick, TICK_TIME)
     this.cluimbisetiTick(this.props.cluimbiseti.lastTime)
-
+    setInterval(this.cluimbisetiTick, TICK_TIME)
+    setInterval(this.blink, 4000)
     // this.panResponder = PanResponder.create({
     //   onStartShouldSetPanResponder: (evt, gestureState) => true,
     //   onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
@@ -42,30 +43,22 @@ class Cluimbiseti extends React.Component {
   }
 
   componentDidMount() {
-    AppState.addEventListener('change', this.handleAppStateChange);
+    AppState.addEventListener('change', this.handleAppStateChange)
   }
 
   componentWillUnmount() {
-    AppState.removeEventListener('change', this.handleAppStateChange);
-  }
-
-  eat = () => {
-    const newState = { ...this.props.cluimbiseti }
-    newState.hunger += 1
-
-    this.props.updateState(newState)
+    AppState.removeEventListener('change', this.handleAppStateChange)
   }
 
   cluimbisetiTick = (lastTime) => {
     // @TODO more complex logic
     const newState = { ...this.props.cluimbiseti }
 
-    const elapsedTime = !lastTime ?
-      1 : Math.floor(moment().diff(lastTime, 'ms') / TICK_TIME)
-    console.log("TCL: Cluimbiseti -> cluimbisetiTick -> elapsedTime", elapsedTime)
-    newState.hunger = Math.max(newState.hunger - 0.2 * elapsedTime, 0)
-    newState.health = Math.max(newState.health - 0.2 * elapsedTime, 0)
-    newState.sleep = Math.max(newState.sleep - 0.2 * elapsedTime, 0)
+    const elapsedTime = !lastTime ? 1 : Math.floor(moment().diff(lastTime, 'ms') / TICK_TIME)
+    // console.log("TCL: Cluimbiseti -> cluimbisetiTick -> elapsedTime", elapsedTime)
+    newState.hunger = Math.max(newState.hunger - 0.05 * elapsedTime, 0)
+    newState.health = Math.max(newState.health - 0.05 * elapsedTime, 0)
+    newState.sleep = Math.max(newState.sleep - 0.05 * elapsedTime, 0)
 
     this.props.updateState(newState)
   }
@@ -77,30 +70,39 @@ class Cluimbiseti extends React.Component {
       console.log("app going to background")
       // setting the last time the app used
       this.props.updateState({ ...this.props.cluimbiseti, lastTime: moment().format() })
-    } else if (
-      this.state.appState.match(/inactive|background/) &&
-      nextAppState === 'active'
-    ) {
-      this.cluimbisetiTick(this.props.cluimbiseti.lastTime)
+    } else if (this.state.appState.match(/inactive|background/) &&
+      nextAppState === 'active') {
       console.log("app going to foreground")
-      // const newState = { ...this.props.cluimbiseti }
+      this.cluimbisetiTick(this.props.cluimbiseti.lastTime)
     }
 
     this.setState({appState: nextAppState})
   }
 
+  blink = () => {
+    this.setState({blinking: true})
+    setTimeout(() => this.setState({blinking: false}), 1500);
+  }
+
   render() {
-    const bgColor = this.props.collision ? 'red' : 'white'
+    // const bgColor = this.props.collision ? 'red' : 'white'
     return(
       <View style={styles.container}
         // {...this.panResponder.panHandlers}
         // style={{backgroundColor: bgColor}}
       >
-        <BodySvg style={styles.body}
+        <BodySvg
+          style={styles.body}
           ref={this.cluimbisetiSvgElement}
         />
-        <SleepHatSvg style={styles.sleepHat}/>
-        <EyesSvg style={styles.eyes}/>
+        <SleepHatSvg
+          style={styles.sleepHat}
+        />
+        <EyesSvg
+          eyelidL={this.state.blinking}
+          eyelidR={this.state.blinking}
+          style={styles.eyes}
+        />
       </View>
     )
   }
