@@ -20,8 +20,8 @@ class Cluimbiseti extends React.Component {
     super(props)
     this.cluimbisetiSvgElement = React.createRef()
     this.cluimbisetiTick(this.props.cluimbiseti.lastTime)
-    setInterval(this.cluimbisetiTick, TICK_TIME)
-    setInterval(this.blink, 4000)
+    this.cluimbisetiTick = setInterval(this.cluimbisetiTick, TICK_TIME)
+    this.blinkTick = setInterval(this.blink, 4000)
     // this.panResponder = PanResponder.create({
     //   onStartShouldSetPanResponder: (evt, gestureState) => true,
     //   onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
@@ -48,6 +48,8 @@ class Cluimbiseti extends React.Component {
 
   componentWillUnmount() {
     AppState.removeEventListener('change', this.handleAppStateChange)
+    clearInterval(this.cluimbisetiTick)
+    clearInterval(this.blinkTick)
   }
 
   cluimbisetiTick = (lastTime) => {
@@ -57,7 +59,7 @@ class Cluimbiseti extends React.Component {
     const elapsedTime = !lastTime ? 1 : Math.floor(moment().diff(lastTime, 'ms') / TICK_TIME)
     // console.log("TCL: Cluimbiseti -> cluimbisetiTick -> elapsedTime", elapsedTime)
     newState.hunger = Math.max(newState.hunger - 0.05 * elapsedTime, 0)
-    newState.health = Math.max(newState.health - 0.05 * elapsedTime, 0)
+    // newState.health = Math.max(newState.health - 0.05 * elapsedTime, 0)
     newState.sleep = !this.props.cluimbiseti.sleeping ?
       Math.max(newState.sleep - 0.05 * elapsedTime, 0) :
       newState.sleep + 0.15

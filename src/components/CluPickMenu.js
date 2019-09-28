@@ -44,7 +44,7 @@ class CluPickMenu extends React.Component {
             numColumns={2}
             keyExtractor={item => item.id}
             renderItem={({ item }) => (
-              <TouchableOpacity 
+              <TouchableOpacity
                 style={styles.pickIconContainer}
                 onPress={() => this.pickItem(item)}>
                 <FontAwesomeIcon

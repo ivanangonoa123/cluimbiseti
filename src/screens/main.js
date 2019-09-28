@@ -146,12 +146,15 @@ class MainScreen extends React.Component {
             />
           </View>
         }
-        <View style={styles.purgeBtn}>
-          <Button
-            title="P"
-            onPress={this.purge}
-          />
-        </View>
+        {
+          __DEV__ &&
+          <View style={styles.purgeBtn}>
+            <Button
+              title="P"
+              onPress={this.purge}
+            />
+          </View>
+        }
       </View>
     )
   }

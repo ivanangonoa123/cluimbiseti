@@ -4,8 +4,8 @@ import HomeScreen from './screens/home';
 import MainScreen from './screens/main';
 
 const MainNavigator = createStackNavigator({
+  Home: {screen: __DEV__ ? HomeScreen : MainScreen},
   Main: {screen: MainScreen},
-  Home: {screen: HomeScreen},
 });
 
 const Navigation = createAppContainer(MainNavigator);
